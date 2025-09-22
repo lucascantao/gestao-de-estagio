@@ -1,0 +1,35 @@
+meta {
+  name: Criar Estágio
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/api/estagio
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "carga_horaria": 4,
+    "horario": "Tarde",
+    "data_inicio": "2024-01-02",
+    "data_termino": "2024-01-01",
+    "empresas_id": null,
+    "salario": 690.00,
+    "users_id": 2,
+    "supervisor": "The Rock",
+    "empresa": {
+      "nome": "Empresa XYZ",
+      "endereco": "Rua ABC",
+      "cnpj": "A12B.SALÇD/ALDJDKLAS-10AD8",
+      "email":"email@gmail.com",
+      "telefone":"(99) 99187-8008"
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -15,4 +15,8 @@ class BaseRepositoryImpl implements BaseRepository{
     public function __construct(
         protected ?Model $model
     ) {}
+
+    public function store(array  $data): Model {
+        return $this->model::create($data);
+    }
 }

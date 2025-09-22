@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\DTO\Response\APIResponseDTO;
+use App\Http\Requests\CreateEstagioRequest;
 use App\Http\Requests\EstagioRequest;
 use App\Services\EstagioService;
 use Illuminate\Http\Request;
@@ -27,5 +28,9 @@ class EstagioController
                 'error' => null
             ]
         ));
+    }
+
+    public function storeEstagio(CreateEstagioRequest $request) {
+        $res = $this->estagioService->storeEstagio($request->validated());
     }
 }

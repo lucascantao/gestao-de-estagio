@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\DTO\Response\EstagioDTO;
 use App\Http\DTO\Response\PageResponseDTO;
 use App\Repositories\Interface\EstagioRepository;
+use Illuminate\Support\Facades\DB;
 
 class EstagioService {
 
@@ -21,6 +22,22 @@ class EstagioService {
             ->toArray();
 
         return PageResponseDTO::fromPaginator($paginator, $estagios);
+
+    }
+
+    public function storeEstagio(array $data) {
+        $transaction = DB::transaction(function () use ($data) {
+            $empresaCreated = true;
+            if($data['empresa'] !== null) {
+                // dd($data);
+                // Cadastrar empresa
+                // Pegar o ID da empresa cadastrada
+            }
+
+            $estagioCreated = $this->estagioRepository->store($data);
+        });
+
+        return [];
 
     }
 }
