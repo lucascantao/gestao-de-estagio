@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\EstagioRequest;
 use App\Services\EstagioService;
 use Illuminate\Http\Request;
@@ -13,10 +14,18 @@ class EstagioController
     }
 
     public function getAllEstagios(EstagioRequest $request) {
-        $data = $request->validated();
-        return response()->json($this->estagioService->getAllEstagios(
+        $res = $this->estagioService->getAllEstagios(
             $request->query('page'),
             $request->query('perPage')
+        );
+
+        return response()->json(APIResponseDTO::fromData(
+            [
+                'status' => 'success',
+                'data' => $res->toArray(),
+                'metadata' => null,
+                'error' => null
+            ]
         ));
     }
 }

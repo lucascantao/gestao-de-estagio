@@ -18,7 +18,7 @@ class EstagioDTO implements JsonSerializable {
         protected string $supervisor,
         protected int $empresas_id,
         protected int $estagios_status_id,
-        protected int $users_id,
+        protected UserDTO $user
     )
     {
         $this->id = $id;
@@ -31,10 +31,25 @@ class EstagioDTO implements JsonSerializable {
         $this->supervisor = $supervisor;
         $this->empresas_id = $empresas_id;
         $this->estagios_status_id = $estagios_status_id;
-        $this->users_id = $users_id;
+        $this->user = $user;
     }
 
     public static function fromEstagio(Estagio $estagio): self {
+        $perfil = new PerfilDTO(
+            $estagio->perfil_id,
+            $estagio->perfil_nome
+        );
+        $curso = new CursoDTO(
+            $estagio->curso_id,
+            $estagio->curso_nome
+        );
+        $user = new UserDTO(
+            $estagio->user_id,
+            $estagio->user_name,
+            $estagio->user_email,
+            $perfil,
+            $curso
+        );
         return new self(
             $estagio->id,
             $estagio->carga_horaria,
@@ -46,7 +61,7 @@ class EstagioDTO implements JsonSerializable {
             $estagio->supervisor,
             $estagio->empresas_id,
             $estagio->estagios_status_id,
-            $estagio->users_id
+            $user
         );
     }
 
@@ -63,7 +78,7 @@ class EstagioDTO implements JsonSerializable {
             'supervisor' => $this->supervisor,
             'empresas_id' => $this->empresas_id,
             'estagios_status_id' => $this->estagios_status_id,
-            'users_id' => $this->users_id
+            'user' => $this->user->toArray()
         ];
     }
 
@@ -107,8 +122,8 @@ class EstagioDTO implements JsonSerializable {
         return $this->estagios_status_id;
     }
 
-    public function getUsersId(): int {
-        return $this->users_id;
+    public function getUser(): UserDTO {
+        return $this->user;
     }
 
     public function jsonSerialize(): mixed {

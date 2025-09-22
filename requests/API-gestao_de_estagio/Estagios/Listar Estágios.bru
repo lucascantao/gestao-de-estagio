@@ -5,9 +5,14 @@ meta {
 }
 
 get {
-  url: http://localhost:8000/api/estagio
+  url: http://localhost:8000/api/estagio?page=1&perPage=15
   body: none
   auth: inherit
+}
+
+params:query {
+  page: 1
+  perPage: 15
 }
 
 settings {

@@ -30,6 +30,16 @@ class PageResponseDTO implements JsonSerializable {
         );
     }
 
+    public function toArray(): array {
+        return [
+            'current_page' => $this->currentPage,
+            'per_page' => $this->perPage,
+            'total' => $this->total,
+            'last_page' => $this->lastPage,
+            'items' => $this->items
+        ];
+    }
+
     public function jsonSerialize(): array {
         return get_object_vars($this);
     }

@@ -15,7 +15,29 @@ class EstagioRepositoryImpl extends BaseRepositoryImpl implements EstagioReposit
     }
 
     public function getAllEstagios(int $page, int $perPage): LengthAwarePaginator {
-        $query = $this->model::select('*');
+        $query = $this->model::select(
+            'estagios.id',
+            'estagios.carga_horaria',
+            'estagios.horario',
+            'estagios.data_inicio',
+            'estagios.data_termino',
+            'estagios.salario',
+            'estagios.observacao',
+            'estagios.supervisor',
+            'estagios.empresas_id',
+            'estagios.estagios_status_id',
+            'users.id as user_id',
+            'users.name as user_name',
+            'users.email as user_email',
+            'perfis.id as perfil_id',
+            'perfis.nome as perfil_nome',
+            'cursos.id as curso_id',
+            'cursos.nome as curso_nome',
+        )
+        ->join('users', 'estagios.users_id', '=', 'users.id')
+        ->join('perfis', 'users.perfis_id', '=', 'perfis.id')
+        ->join('cursos', 'users.cursos_id', '=', 'cursos.id')
+        ->orderBy('estagios.id', 'desc');
 
         return $query->paginate($perPage, ['*'], 'page', $page);
     }
