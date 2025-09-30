@@ -15,13 +15,7 @@ class UserDTO implements JsonSerializable {
         protected PerfilDTO $perfil,
         protected CursoDTO $curso,
     )
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->perfil = $perfil;
-        $this->curso = $curso;
-    }
+    { }
 
     public static function fromUser(User $user): self {
         return new self(

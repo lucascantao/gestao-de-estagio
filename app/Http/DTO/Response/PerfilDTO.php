@@ -12,10 +12,7 @@ class PerfilDTO implements JsonSerializable {
         protected int $id,
         protected string $nome
     )
-    {
-        $this->id = $id;
-        $this->nome = $nome;
-    }
+    { }
 
     public static function fromUser(object $user): self {
         return new self(

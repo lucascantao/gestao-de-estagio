@@ -6,19 +6,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use JsonSerializable;
 
 class PageResponseDTO implements JsonSerializable {
-    private int $currentPage;
-    private int $perPage;
-    private int $total;
-    private int $lastPage;
-    private array $items;
 
-    public function __construct(int $currentPage, int $perPage, int $total, int $lastPage, array $items) {
-        $this->currentPage = $currentPage;
-        $this->perPage = $perPage;
-        $this->total = $total;
-        $this->lastPage = $lastPage;
-        $this->items = $items;
-    }
+    public function __construct(
+        protected int $page,
+        protected int $perPage,
+        protected int $total,
+        protected int $lastPage,
+        protected array $items
+    ) { }
 
     public static function fromPaginator(LengthAwarePaginator $paginator, array $items): PageResponseDTO {
         return new PageResponseDTO(
@@ -32,10 +27,10 @@ class PageResponseDTO implements JsonSerializable {
 
     public function toArray(): array {
         return [
-            'current_page' => $this->currentPage,
-            'per_page' => $this->perPage,
+            'page' => $this->page,
+            'perPage' => $this->perPage,
             'total' => $this->total,
-            'last_page' => $this->lastPage,
+            'lastPage' => $this->lastPage,
             'items' => $this->items
         ];
     }

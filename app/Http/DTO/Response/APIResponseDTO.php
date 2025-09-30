@@ -13,12 +13,7 @@ class APIResponseDTO implements JsonSerializable {
         protected ?array $metadata,
         protected ?array $error
     )
-    {
-        $this->status = $status;
-        $this->data = $data;
-        $this->metadata = $metadata;
-        $this->error = $error;
-    }
+    { }
 
     public static function fromData(array $data): self {
         return new self(

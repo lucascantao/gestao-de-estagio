@@ -20,19 +20,7 @@ class EstagioDTO implements JsonSerializable {
         protected int $estagios_status_id,
         protected UserDTO $user
     )
-    {
-        $this->id = $id;
-        $this->carga_horaria = $carga_horaria;
-        $this->horario = $horario;
-        $this->data_inicio = $data_inicio;
-        $this->data_termino = $data_termino;
-        $this->salario = $salario;
-        $this->observacao = $observacao ?? null;
-        $this->supervisor = $supervisor;
-        $this->empresas_id = $empresas_id;
-        $this->estagios_status_id = $estagios_status_id;
-        $this->user = $user;
-    }
+    { }
 
     public static function fromEstagio(Estagio $estagio): self {
         $perfil = new PerfilDTO(
