@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Estagio;
 use App\Repositories\Impl\EstagioRepositoryImpl;
+use App\Repositories\Interface\EmpresaRepository;
 use App\Repositories\Interface\EstagioRepository;
 use App\Services\EstagioService;
 use Illuminate\Support\ServiceProvider;
@@ -17,7 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(EstagioService::class, function ($app) {
             return new EstagioService(
-                $this->app->make(EstagioRepository::class)
+                $this->app->make(EstagioRepository::class),
+                $this->app->make(EmpresaRepository::class),
             );
         });
     }

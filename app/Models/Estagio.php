@@ -8,6 +8,8 @@ class Estagio extends Model
 {
     protected $table = 'estagios';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'workload',
         'day_period',

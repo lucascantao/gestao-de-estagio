@@ -2,16 +2,20 @@
 
 namespace App\Services;
 
+use App\Http\DTO\Request\StoreEstagioRequestDTO;
 use App\Http\DTO\Response\EstagioDTO;
 use App\Http\DTO\Response\PageResponseDTO;
+use App\Repositories\Interface\EmpresaRepository;
 use App\Repositories\Interface\EstagioRepository;
 use Illuminate\Support\Facades\DB;
 
 class EstagioService {
 
     public function __construct(
-        protected EstagioRepository $estagioRepository
-    ) {}
+        protected EstagioRepository $estagioRepository,
+        protected EmpresaRepository $empresaRepository
+    ) {
+    }
 
     public function getAllEstagios(int $page, int $perpage): PageResponseDTO {
         $paginator = $this->estagioRepository->getAllEstagios($page, $perpage);
@@ -25,16 +29,21 @@ class EstagioService {
 
     }
 
-    public function storeEstagio(array $data) {
-        $transaction = DB::transaction(function () use ($data) {
+    public function storeEstagio(StoreEstagioRequestDTO $estagio) {
+        // dd($estagio);
+        $transaction = DB::transaction(function () use ($estagio) {
             $empresaCreated = true;
-            if($data['empresa'] !== null) {
-                // dd($data);
+            if($estagio->getEmpresa() !== null) {
+                // dd($estagio->getEmpresa());
                 // Cadastrar empresa
+                $newEmpresa = $this->empresaRepository->create($estagio->getEmpresa()->toArray());
+                dd($newEmpresa);
                 // Pegar o ID da empresa cadastrada
             }
 
-            $estagioCreated = $this->estagioRepository->store($data);
+            $insertData = $estagio->toArray();
+
+            $estagioCreated = $this->estagioRepository->store($insertData);
         });
 
         return [];

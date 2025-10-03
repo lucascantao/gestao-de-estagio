@@ -22,23 +22,21 @@ class CreateEstagioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'carga_horaria' => 'required|numeric',
-            'horario' => 'required|string',
-            'data_inicio' => 'required|date',
-            'data_termino' => 'required|date',
-            'salario' => 'required|numeric',
-            'observacao' => 'nullable|string',
+            'workload' => 'required|string',
+            'dayPeriod' => 'required|string',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date',
+            'salary' => 'required|numeric',
+            'observation' => 'nullable|string',
             'supervisor' => 'required|string',
-            // 'estagios_status_id' => 'required|integer',
-            'users_id' => 'required|integer',
-
-            'empresas_id' => 'nullable|integer',
+            'userId' => 'required|integer',
+            'empresaId' => 'nullable|integer',
             'empresa' => 'nullable|array',
-            'empresa.nome' => 'nullable|string',
+            'empresa.name' => 'nullable|string',
             'empresa.cnpj' => 'nullable|string',
-            'empresa.endereco' => 'nullable|string',
+            'empresa.address' => 'nullable|string',
             'empresa.email' => 'nullable|email',
-            'empresa.telefone' => 'nullable|string',
+            'empresa.phone' => 'nullable|string',
 
         ];
     }

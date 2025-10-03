@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\DTO\Request\StoreEstagioRequestDTO;
 use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\CreateEstagioRequest;
 use App\Http\Requests\EstagioRequest;
 use App\Services\EstagioService;
-use Illuminate\Http\Request;
 
 class EstagioController
 {
@@ -31,6 +31,6 @@ class EstagioController
     }
 
     public function storeEstagio(CreateEstagioRequest $request) {
-        $res = $this->estagioService->storeEstagio($request->validated());
+        $res = $this->estagioService->storeEstagio(StoreEstagioRequestDTO::fromRequest($request->array()));
     }
 }
