@@ -25,7 +25,8 @@ class EstagioRepositoryImpl extends BaseRepositoryImpl implements EstagioReposit
             'estagios.observacao',
             'estagios.supervisor',
             'estagios.empresas_id',
-            'estagios.estagios_status_id',
+            'estagios_status.id as estagio_status_id',
+            'estagios_status.nome as estagio_status_nome',
             'users.id as user_id',
             'users.name as user_name',
             'users.email as user_email',
@@ -34,6 +35,7 @@ class EstagioRepositoryImpl extends BaseRepositoryImpl implements EstagioReposit
             'cursos.id as curso_id',
             'cursos.nome as curso_nome',
         )
+        ->join('estagios_status', 'estagios.estagios_status_id', '=', 'estagios_status.id')
         ->join('users', 'estagios.users_id', '=', 'users.id')
         ->join('perfis', 'users.perfis_id', '=', 'perfis.id')
         ->join('cursos', 'users.cursos_id', '=', 'cursos.id')

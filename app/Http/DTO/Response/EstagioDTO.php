@@ -17,12 +17,16 @@ class EstagioDTO implements JsonSerializable {
         protected ?string $observacao,
         protected string $supervisor,
         protected int $empresas_id,
-        protected int $estagios_status_id,
+        protected EstagioStatusDTO $status,
         protected UserDTO $user
     )
     { }
 
     public static function fromEstagio(Estagio $estagio): self {
+        $status = new EstagioStatusDTO(
+            $estagio->estagio_status_id,
+            $estagio->estagio_status_nome
+        );
         $perfil = new PerfilDTO(
             $estagio->perfil_id,
             $estagio->perfil_nome
@@ -48,7 +52,7 @@ class EstagioDTO implements JsonSerializable {
             $estagio->observacao,
             $estagio->supervisor,
             $estagio->empresas_id,
-            $estagio->estagios_status_id,
+            $status,
             $user
         );
     }
@@ -65,7 +69,7 @@ class EstagioDTO implements JsonSerializable {
             'observacao' => $this->observacao,
             'supervisor' => $this->supervisor,
             'empresas_id' => $this->empresas_id,
-            'estagios_status_id' => $this->estagios_status_id,
+            'estagios_status_id' => $this->status->toArray(),
             'user' => $this->user->toArray()
         ];
     }
@@ -106,8 +110,8 @@ class EstagioDTO implements JsonSerializable {
         return $this->empresas_id;
     }
 
-    public function getEstagiosStatusId(): int {
-        return $this->estagios_status_id;
+    public function getEstagiosStatusId(): EstagioStatusDTO {
+        return $this->status;
     }
 
     public function getUser(): UserDTO {
