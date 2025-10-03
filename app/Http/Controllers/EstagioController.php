@@ -25,7 +25,7 @@ class EstagioController
                 'status' => 'success',
                 'data' => $res->toArray(),
                 'metadata' => null,
-                'error' => null
+                'exception' => null
             ]
         ));
     }

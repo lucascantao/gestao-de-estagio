@@ -13,7 +13,7 @@ class EstagioService {
         protected EstagioRepository $estagioRepository
     ) {}
 
-    public function getAllEstagios(int $page, int $perpage) {
+    public function getAllEstagios(int $page, int $perpage): PageResponseDTO {
         $paginator = $this->estagioRepository->getAllEstagios($page, $perpage);
 
         $estagios = $paginator

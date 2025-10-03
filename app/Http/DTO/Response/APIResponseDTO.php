@@ -11,7 +11,7 @@ class APIResponseDTO implements JsonSerializable {
         protected string $status,
         protected array $data,
         protected ?array $metadata,
-        protected ?array $error
+        protected ?array $exception
     )
     { }
 
@@ -20,7 +20,7 @@ class APIResponseDTO implements JsonSerializable {
             $data['status'],
             $data['data'],
             $data['metadata'],
-            $data['error']
+            $data['exception']
         );
     }
 
