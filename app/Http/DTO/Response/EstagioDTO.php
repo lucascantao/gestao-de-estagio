@@ -9,12 +9,12 @@ class EstagioDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
-        protected string $carga_horaria,
-        protected string $horario,
-        protected string $data_inicio,
-        protected string $data_termino,
-        protected float $salario,
-        protected ?string $observacao,
+        protected string $workload,
+        protected string $dayPeriod,
+        protected string $startDate,
+        protected string $endDate,
+        protected float $salary,
+        protected ?string $observation,
         protected string $supervisor,
         protected int $empresas_id,
         protected EstagioStatusDTO $status,
@@ -25,15 +25,15 @@ class EstagioDTO implements JsonSerializable {
     public static function fromEstagio(Estagio $estagio): self {
         $status = new EstagioStatusDTO(
             $estagio->estagio_status_id,
-            $estagio->estagio_status_nome
+            $estagio->estagio_status_name
         );
         $perfil = new PerfilDTO(
             $estagio->perfil_id,
-            $estagio->perfil_nome
+            $estagio->perfil_name
         );
         $curso = new CursoDTO(
             $estagio->curso_id,
-            $estagio->curso_nome
+            $estagio->curso_name
         );
         $user = new UserDTO(
             $estagio->user_id,
@@ -44,12 +44,12 @@ class EstagioDTO implements JsonSerializable {
         );
         return new self(
             $estagio->id,
-            $estagio->carga_horaria,
-            $estagio->horario,
-            $estagio->data_inicio,
-            $estagio->data_termino,
-            $estagio->salario,
-            $estagio->observacao,
+            $estagio->workload,
+            $estagio->day_period,
+            $estagio->start_date,
+            $estagio->end_date,
+            $estagio->salary,
+            $estagio->observation,
             $estagio->supervisor,
             $estagio->empresas_id,
             $status,
@@ -61,12 +61,12 @@ class EstagioDTO implements JsonSerializable {
     {
         return [
             'id' => $this->id,
-            'carga_horaria' => $this->carga_horaria,
-            'horario' => $this->horario,
-            'data_inicio' => $this->data_inicio,
-            'data_termino' => $this->data_termino,
-            'salario' => $this->salario,
-            'observacao' => $this->observacao,
+            'workload' => $this->workload,
+            'day_period' => $this->dayPeriod,
+            'start_date' => $this->startDate,
+            'end_date' => $this->endDate,
+            'salary' => $this->salary,
+            'observation' => $this->observation,
             'supervisor' => $this->supervisor,
             'empresas_id' => $this->empresas_id,
             'estagios_status_id' => $this->status->toArray(),
@@ -78,28 +78,28 @@ class EstagioDTO implements JsonSerializable {
         return $this->id;
     }
 
-    public function getCargaHoraria(): string {
-        return $this->carga_horaria;
+    public function getWorkload(): string {
+        return $this->workload;
     }
 
-    public function getHorario(): string {
-        return $this->horario;
+    public function getDayPeriod(): string {
+        return $this->dayPeriod;
     }
 
-    public function getDataInicio(): string {
-        return $this->data_inicio;
+    public function getStartDate(): string {
+        return $this->startDate;
     }
 
-    public function getDataTermino(): string {
-        return $this->data_termino;
+    public function getEndDate(): string {
+        return $this->endDate;
     }
 
-    public function getSalario(): float {
-        return $this->salario;
+    public function getSalary(): float {
+        return $this->salary;
     }
 
-    public function getObservacao(): ?string {
-        return $this->observacao;
+    public function getObservation(): ?string {
+        return $this->observation;
     }
 
     public function getSupervisor(): string {

@@ -10,14 +10,14 @@ class PerfilDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
-        protected string $nome
+        protected string $name
     )
     { }
 
     public static function fromUser(object $user): self {
         return new self(
             $user->perfil_id,
-            $user->perfil_nome,
+            $user->perfil_name,
         );
     }
 
@@ -25,7 +25,7 @@ class PerfilDTO implements JsonSerializable {
     {
         return [
             'id' => $this->id,
-            'nome' => $this->nome
+            'name' => $this->name
         ];
     }
 
@@ -33,8 +33,8 @@ class PerfilDTO implements JsonSerializable {
         return $this->id;
     }
 
-    public function getNome(): string {
-        return $this->nome;
+    public function getName(): string {
+        return $this->name;
     }
 
     public function jsonSerialize(): mixed {

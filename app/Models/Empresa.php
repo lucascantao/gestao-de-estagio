@@ -9,10 +9,10 @@ class Empresa extends Model
     protected $table = 'empresas';
 
     protected $fillable = [
-        'nome',
+        'name',
         'cnpj',
-        'endereco',
+        'address',
         'email',
-        'telefone'
+        'phone'
     ];
 }

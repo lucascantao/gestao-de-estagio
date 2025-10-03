@@ -9,12 +9,12 @@ class Estagio extends Model
     protected $table = 'estagios';
 
     protected $fillable = [
-        'carga_horaria',
-        'horario',
-        'data_inicio',
-        'data_termino',
-        'salario',
-        'observacao',
+        'workload',
+        'day_period',
+        'start_date',
+        'end_date',
+        'salary',
+        'observation',
         'supervisor',
         'empresas_id',
         'estagios_status_id',
