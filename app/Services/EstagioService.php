@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\DTO\Request\StoreEstagioRequestDTO;
+use App\Http\DTO\Request\UpdateEstagioRequestDTO;
 use App\Http\DTO\Response\EstagioDTO;
 use App\Http\DTO\Response\PageResponseDTO;
 use App\Repositories\Interface\EmpresaRepository;
@@ -37,6 +38,7 @@ class EstagioService {
         try {
             DB::transaction(function () use ($estagio, &$response) {
                 $insertData = $estagio->toInsertArray();
+                $insertData['estagios_status_id'] = 1;
                 if($estagio->getEmpresa() !== null) {
                     $newEmpresa = $this->empresaRepository->store($estagio->getEmpresa()->toArray());
                     $insertData['empresas_id'] = $newEmpresa->id;
@@ -45,6 +47,21 @@ class EstagioService {
                 $response['data'] = ['message' => 'Estágio cadastrado com sucesso.'];
                 $response['status'] = 'success';
             });
+        } catch (\Exception $e) {
+            $response['status'] = 'error';
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+        }
+
+        return $response;
+    }
+
+    public function updateEstagio(int $id, UpdateEstagioRequestDTO $estagio): array {
+        $response = [];
+        try {
+            $updateData = $estagio->toUpdateArray();
+            $this->estagioRepository->update($id, $updateData);
+            $response['data'] = ['message' => 'Estágio atualizado com sucesso.'];
+            $response['status'] = 'success';
         } catch (\Exception $e) {
             $response['status'] = 'error';
             $response['exception'] = $this->exception($e, __FILE__, __METHOD__);

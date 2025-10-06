@@ -1,0 +1,27 @@
+meta {
+  name: Atualizar Estágio
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:8000/api/estagio/6
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "workload": "30"
+  //   "dayPeriod": "Manhã",
+  //   "startDate": "2024-01-02",
+  //   "endDate": "2024-01-01",
+  //   "salary": 1024.00,
+  //   "observation": "The Rock",
+  //   "supervisor": "Musan"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

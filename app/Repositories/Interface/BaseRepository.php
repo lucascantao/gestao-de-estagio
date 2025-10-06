@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 interface BaseRepository {
 
     public function store(array $data): Model;
+    public function update(int $id, array $data): bool;
 
 }

@@ -16,6 +16,7 @@ Route::controller(EstagioController::class)->group(function () {
     Route::prefix('estagio')->group(function () {
         Route::get('/', 'getAllEstagios'); // Listar Estágios
         Route::post('/', 'storeEstagio'); // Cadastrar Estágio
+        Route::put('/{id}', 'updateEstagio'); // Atualizar Estágio
         // Atualizar Status do Estágio
         // Submeter Documentação
         // Acompanhar Estágio

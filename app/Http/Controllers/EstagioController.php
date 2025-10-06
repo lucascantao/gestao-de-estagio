@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\DTO\Request\StoreEstagioRequestDTO;
+use App\Http\DTO\Request\UpdateEstagioRequestDTO;
 use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\CreateEstagioRequest;
 use App\Http\Requests\EstagioRequest;
+use App\Http\Requests\UpdateEstagioRequest;
 use App\Services\EstagioService;
 
 class EstagioController
@@ -35,6 +37,16 @@ class EstagioController
         ->json(APIResponseDTO::fromData(
             $this->estagioService->storeEstagio(
                     StoreEstagioRequestDTO::fromRequest($request->array())
+                )
+            )
+        );
+    }
+
+    public function updateEstagio(UpdateEstagioRequest $request, int $id) {
+        return response()
+        ->json(APIResponseDTO::fromData(
+            $this->estagioService->updateEstagio($id,
+                    UpdateEstagioRequestDTO::fromRequest($request->array()),
                 )
             )
         );

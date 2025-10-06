@@ -19,4 +19,11 @@ class BaseRepositoryImpl implements BaseRepository{
     public function store(array  $data): Model {
         return $this->model::create($data);
     }
+
+    public function update(int $id, array  $data): bool {
+        if(empty($data)) {
+            throw new \InvalidArgumentException("Data array cannot be empty");
+        }
+        return $this->model::where('id', $id)->update($data);
+    }
 }
