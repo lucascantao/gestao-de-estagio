@@ -21,6 +21,14 @@ class EstagioService {
     ) {
     }
 
+    public function getEstagioById(int $id): ?array {
+        $response = [];
+        $estagio = $this->estagioRepository->getEstagioById($id);
+        $response['status'] = $estagio ? 'success' : 'not_found';
+        $response['data'] = $estagio ? EstagioDTO::fromEstagio($estagio)->toArray() : ['message' => 'Estágio não encontrado.'];
+        return $response;
+    }
+
     public function getAllEstagios(int $page, int $perpage): PageResponseDTO {
         $paginator = $this->estagioRepository->getAllEstagios($page, $perpage);
 

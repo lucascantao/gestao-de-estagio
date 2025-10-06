@@ -16,6 +16,12 @@ class EstagioController
     public function __construct(protected EstagioService $estagioService) {
     }
 
+    public function getEstagioById(int $id) {
+        return response()->json(APIResponseDTO::fromData(
+            $this->estagioService->getEstagioById($id)
+        ));
+    }
+
     public function getAllEstagios(EstagioRequest $request) {
         $res = $this->estagioService->getAllEstagios(
             $request->query('page'),

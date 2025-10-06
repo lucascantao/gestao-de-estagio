@@ -15,6 +15,7 @@ Route::get('/user', function (Request $request) {
 Route::controller(EstagioController::class)->group(function () {
     Route::prefix('estagio')->group(function () {
         Route::get('/', 'getAllEstagios'); // Listar Estágios
+        Route::get('/{id}', 'getEstagioById'); // Buscar Estágio por ID
         Route::post('/', 'storeEstagio'); // Cadastrar Estágio
         Route::put('/{id}', 'updateEstagio'); // Atualizar Estágio
         // Atualizar Status do Estágio

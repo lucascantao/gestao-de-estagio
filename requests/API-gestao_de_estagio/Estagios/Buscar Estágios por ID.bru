@@ -1,0 +1,20 @@
+meta {
+  name: Buscar Estágios por ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8000/api/estagio?page=1&perPage=15
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  perPage: 15
+}
+
+settings {
+  encodeUrl: true
+}
