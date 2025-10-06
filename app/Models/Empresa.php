@@ -8,6 +8,8 @@ class Empresa extends Model
 {
     protected $table = 'empresas';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'cnpj',

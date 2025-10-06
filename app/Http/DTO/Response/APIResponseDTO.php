@@ -9,7 +9,7 @@ class APIResponseDTO implements JsonSerializable {
 
     public function __construct(
         protected string $status,
-        protected array $data,
+        protected ?array $data,
         protected ?array $metadata,
         protected ?array $exception
     )
@@ -18,18 +18,11 @@ class APIResponseDTO implements JsonSerializable {
     public static function fromData(array $data): self {
         return new self(
             $data['status'],
-            $data['data'],
-            $data['metadata'],
-            $data['exception']
+            $data['data'] ?? null,
+            $data['metadata'] ?? null,
+            $data['exception'] ?? null
         );
     }
-
-    // public function toArray(): array
-    // {
-    //     return [
-
-    //     ];
-    // }
 
     public function jsonSerialize(): mixed {
         return get_object_vars($this);

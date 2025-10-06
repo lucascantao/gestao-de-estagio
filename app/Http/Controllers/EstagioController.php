@@ -31,6 +31,12 @@ class EstagioController
     }
 
     public function storeEstagio(CreateEstagioRequest $request) {
-        $res = $this->estagioService->storeEstagio(StoreEstagioRequestDTO::fromRequest($request->array()));
+        return response()
+        ->json(APIResponseDTO::fromData(
+            $this->estagioService->storeEstagio(
+                    StoreEstagioRequestDTO::fromRequest($request->array())
+                )
+            )
+        );
     }
 }

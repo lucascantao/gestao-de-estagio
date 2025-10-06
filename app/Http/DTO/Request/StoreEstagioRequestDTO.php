@@ -55,6 +55,21 @@ class StoreEstagioRequestDTO implements JsonSerializable {
         ];
     }
 
+    public function toInsertArray(): array
+    {
+        return [
+            'workload' => $this->workload,
+            'day_period' => $this->dayPeriod,
+            'start_date' => $this->startDate,
+            'end_date' => $this->endDate,
+            'salary' => $this->salary,
+            'users_id' => $this->userId,
+            'observation' => $this->observation,
+            'supervisor' => $this->supervisor,
+            'empresas_id' => $this->empresaId,
+        ];
+    }
+
     public function jsonSerialize(): mixed {
         return get_object_vars($this);
     }

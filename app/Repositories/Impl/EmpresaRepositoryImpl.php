@@ -13,11 +13,6 @@ class EmpresaRepositoryImpl extends BaseRepositoryImpl implements EmpresaReposit
         parent::__construct($model);
     }
 
-    public function create(array $data) {
-        dd($data);
-        return $this->model->create($data);
-    }
-
     public function getAllEmpresas(int $page, int $perPage): LengthAwarePaginator {
         $query = $this->model::select(
             // 'estagios.id',
