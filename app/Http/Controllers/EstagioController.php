@@ -9,6 +9,7 @@ use App\Http\Requests\CreateEstagioRequest;
 use App\Http\Requests\EstagioRequest;
 use App\Http\Requests\UpdateEstagioRequest;
 use App\Services\EstagioService;
+use Illuminate\Http\Request;
 
 class EstagioController
 {
@@ -53,6 +54,17 @@ class EstagioController
         ->json(APIResponseDTO::fromData(
             $this->estagioService->updateEstagio($id,
                     UpdateEstagioRequestDTO::fromRequest($request->array()),
+                )
+            )
+        );
+    }
+
+    public function updateEstagioStatus(Request $request) {
+        return response()
+        ->json(APIResponseDTO::fromData(
+            $this->estagioService->updateEstagioStatus(
+                    $request->input('estagioId'),
+                    $request->input('statusId'),
                 )
             )
         );

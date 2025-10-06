@@ -77,4 +77,18 @@ class EstagioService {
 
         return $response;
     }
+
+    public function updateEstagioStatus(int $estagioId, int $statusId): array {
+        $response = [];
+        try {
+            $this->estagioRepository->update($estagioId, ['estagios_status_id' => $statusId]);
+            $response['data'] = ['message' => 'Status do Estágio atualizado com sucesso.'];
+            $response['status'] = 'success';
+        } catch (\Exception $e) {
+            $response['status'] = 'error';
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+        }
+
+        return $response;
+    }
 }

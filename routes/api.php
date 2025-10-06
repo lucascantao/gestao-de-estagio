@@ -18,7 +18,7 @@ Route::controller(EstagioController::class)->group(function () {
         Route::get('/{id}', 'getEstagioById'); // Buscar Estágio por ID
         Route::post('/', 'storeEstagio'); // Cadastrar Estágio
         Route::put('/{id}', 'updateEstagio'); // Atualizar Estágio
-        // Atualizar Status do Estágio
+        Route::post('/update-status', 'updateEstagioStatus'); // Atualizar Status do Estágio
         // Submeter Documentação
         // Acompanhar Estágio
     });

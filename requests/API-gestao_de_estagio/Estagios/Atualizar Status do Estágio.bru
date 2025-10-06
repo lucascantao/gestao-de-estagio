@@ -1,0 +1,22 @@
+meta {
+  name: Atualizar Status do Estágio
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8000/api/estagio/update-status
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "statusId": 2,
+    "estagioId": 6
+  }
+}
+
+settings {
+  encodeUrl: true
+}
