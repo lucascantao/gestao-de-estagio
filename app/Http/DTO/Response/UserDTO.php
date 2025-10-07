@@ -3,7 +3,7 @@
 namespace App\Http\DTO\Response;
 
 use App\Models\Estagio;
-use App\Models\User;
+use App\Models\UserModel;
 use JsonSerializable;
 
 class UserDTO implements JsonSerializable {
@@ -17,7 +17,7 @@ class UserDTO implements JsonSerializable {
     )
     { }
 
-    public static function fromUser(User $user): self {
+    public static function fromUser(UserModel $user): self {
         return new self(
             $user->id,
             $user->name,
