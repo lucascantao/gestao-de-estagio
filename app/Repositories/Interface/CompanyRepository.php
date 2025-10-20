@@ -5,6 +5,6 @@ namespace App\Repositories\Interface;
 use App\Repositories\Interface\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface EmpresaRepository extends BaseRepository {
-    public function getAllEmpresas(int $page, int $perPage): LengthAwarePaginator;
+interface CompanyRepository extends BaseRepository {
+    public function getAllCompanies(int $page, int $perPage): LengthAwarePaginator;
 }

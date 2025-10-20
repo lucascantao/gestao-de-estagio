@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:8000/api/estagio
+  url: http://localhost:8000/api/internship
   body: json
   auth: inherit
 }
@@ -13,15 +13,15 @@ post {
 body:json {
   {
     "workload": "20",
-    "dayPeriod": "Manhã",
+    "schedule": "Manhã",
     "startDate": "2024-01-02",
     "endDate": "2024-01-01",
-    "empresaId": null,
+    "companyId": null,
     "salary": 1024.00,
     "userId": 2,
     "observation": "The Rock",
     "supervisor": "John Cena",
-    "empresa": {
+    "company": {
       "name": "Empresa XYZ",
       "address": "Rua ABC",
       "cnpj": "A12B.SALÇD/ALDJDKLAS-10AD8",
@@ -33,4 +33,5 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

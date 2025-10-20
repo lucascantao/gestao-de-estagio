@@ -5,7 +5,7 @@ namespace App\Http\DTO\Request;
 use App\Models\Estagio;
 use JsonSerializable;
 
-class EmpresaDTO implements JsonSerializable {
+class CompanyDTO implements JsonSerializable {
 
     public function __construct(
         protected ?string $name,

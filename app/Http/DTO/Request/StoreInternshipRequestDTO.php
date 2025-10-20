@@ -2,40 +2,40 @@
 
 namespace App\Http\DTO\Request;
 
-use App\Models\Estagio;
+
 use JsonSerializable;
 
-class StoreEstagioRequestDTO implements JsonSerializable {
+class StoreInternshipRequestDTO implements JsonSerializable {
 
     public function __construct(
         protected string $workload,
-        protected string $dayPeriod,
+        protected string $schedule,
         protected string $startDate,
         protected string $endDate,
         protected float $salary,
         protected int $userId,
         protected ?string $observation,
         protected string $supervisor,
-        protected ?int $empresaId,
-        protected ?EmpresaDTO $empresa
+        protected ?int $companyId,
+        protected ?CompanyDTO $company
     )
     { }
 
     public static function fromRequest(array $request): self {
-        if( isset($request['empresa']) ) {
-            $empresa = EmpresaDTO::fromRequest($request['empresa']);
+        if( isset($request['company']) ) {
+            $company = CompanyDTO::fromRequest($request['company']);
         }
         return new self(
             $request['workload'],
-            $request['dayPeriod'],
+            $request['schedule'],
             $request['startDate'],
             $request['endDate'],
             $request['salary'],
             $request['userId'],
             $request['observation'] ?? null,
             $request['supervisor'],
-            $request['empresaId'] ?? null,
-            $empresa ?? null
+            $request['companyId'] ?? null,
+            $company ?? null
         );
     }
 
@@ -43,15 +43,15 @@ class StoreEstagioRequestDTO implements JsonSerializable {
     {
         return [
             'workload' => $this->workload,
-            'dayPeriod' => $this->dayPeriod,
+            'schedule' => $this->schedule,
             'startDate' => $this->startDate,
             'endDate' => $this->endDate,
             'salary' => $this->salary,
             'userId' => $this->userId,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
-            'empresaId' => $this->empresaId,
-            'empresa' => $this->empresa ? $this->empresa->toArray() : null,
+            'companyId' => $this->companyId,
+            'company' => $this->company ? $this->company->toArray() : null,
         ];
     }
 
@@ -59,14 +59,14 @@ class StoreEstagioRequestDTO implements JsonSerializable {
     {
         return [
             'workload' => $this->workload,
-            'day_period' => $this->dayPeriod,
+            'schedule' => $this->schedule,
             'start_date' => $this->startDate,
             'end_date' => $this->endDate,
             'salary' => $this->salary,
             'users_id' => $this->userId,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
-            'empresas_id' => $this->empresaId,
+            'company_id' => $this->companyId,
         ];
     }
 
@@ -74,7 +74,7 @@ class StoreEstagioRequestDTO implements JsonSerializable {
         return get_object_vars($this);
     }
 
-    public function getEmpresa(): ?EmpresaDTO {
-        return $this->empresa;
+    public function getCompany(): ?CompanyDTO {
+        return $this->company;
     }
 }

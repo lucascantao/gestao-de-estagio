@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Estagio extends Model
+class InternshipModel extends Model
 {
-    protected $table = 'estagios';
+    protected $table = 'internships';
 
     public $timestamps = false;
 
     protected $fillable = [
         'workload',
-        'day_period',
+        'schedule',
         'start_date',
         'end_date',
         'salary',
         'observation',
         'supervisor',
-        'empresas_id',
-        'estagios_status_id',
-        'users_id'
+        'company_id',
+        'internship_status_id',
+        'user_id'
     ];
 }

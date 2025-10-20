@@ -2,11 +2,10 @@
 
 namespace App\Http\DTO\Response;
 
-use App\Models\Estagio;
-use App\Models\User;
+
 use JsonSerializable;
 
-class PerfilDTO implements JsonSerializable {
+class CourseDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
@@ -16,8 +15,8 @@ class PerfilDTO implements JsonSerializable {
 
     public static function fromUser(object $user): self {
         return new self(
-            $user->perfil_id,
-            $user->perfil_name,
+            $user->course_id,
+            $user->course_name,
         );
     }
 

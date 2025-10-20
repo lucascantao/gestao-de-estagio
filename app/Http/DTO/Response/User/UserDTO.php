@@ -48,10 +48,10 @@ class UserDTO implements JsonSerializable {
             $user->getAttribute('id'),
             $user->getAttribute('name'),
             $user->getAttribute('email'),
-            $user->getAttribute('created_at'),
-            $user->getAttribute('updated_at'),
-            $user->getAttribute('perfis_id'),
-            $user->getAttribute('perfis_name'),
+            // $user->getAttribute('created_at'),
+            // $user->getAttribute('updated_at'),
+            $user->getAttribute('role_id'),
+            $user->getAttribute('role_name'),
             $user->getAttribute('roles_description'),
             $user->getAttribute('partners_id'),
             $user->getAttribute('partners_name'),
@@ -68,8 +68,8 @@ class UserDTO implements JsonSerializable {
             $user->id ?? null,
             $user->name ?? null,
             $user->email ?? null,
-            $user->created_at ?? null,
-            $user->updated_at ?? null,
+            // $user->created_at ?? null,
+            // $user->updated_at ?? null,
             $user->roles_id ?? null,
             $user->roles_name ?? null,
             $user->roles_description ?? null,
@@ -93,10 +93,14 @@ class UserDTO implements JsonSerializable {
             'address' => $this->address,
             'partners_id' => $this->partnerId,
             'partners_name' => $this->partnerName,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
+            // 'createdAt' => $this->createdAt,
+            // 'updatedAt' => $this->updatedAt,
             'role' => $this->role->toArray(),
             'enable' => $this->enable
         ];
+    }
+
+    public function jsonSerialize(): mixed {
+        return get_object_vars($this);
     }
 }

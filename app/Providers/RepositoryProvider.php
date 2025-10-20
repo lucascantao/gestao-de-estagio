@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\Empresa;
-use App\Models\Estagio;
-use App\Repositories\Impl\EmpresaRepositoryImpl;
-use App\Repositories\Impl\EstagioRepositoryImpl;
-use App\Repositories\Interface\EmpresaRepository;
-use App\Repositories\Interface\EstagioRepository;
+use App\Models\CompanyModel;
+use App\Models\InternshipModel;
+use App\Repositories\Impl\CompanyRepositoryImpl;
+use App\Repositories\Impl\InternshipRepositoryImpl;
+use App\Repositories\Interface\CompanyRepository;
+use App\Repositories\Interface\InternshipRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryProvider extends ServiceProvider
@@ -17,12 +17,12 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(EstagioRepository::class, function ($app) {
-            return new EstagioRepositoryImpl($this->app->make(Estagio::class));
+        $this->app->singleton(InternshipRepository::class, function ($app) {
+            return new InternshipRepositoryImpl($this->app->make(InternshipModel::class));
         });
 
-        $this->app->singleton(EmpresaRepository::class, function ($app) {
-            return new EmpresaRepositoryImpl($this->app->make(Empresa::class));
+        $this->app->singleton(CompanyRepository::class, function ($app) {
+            return new CompanyRepositoryImpl($this->app->make(CompanyModel::class));
         });
     }
 

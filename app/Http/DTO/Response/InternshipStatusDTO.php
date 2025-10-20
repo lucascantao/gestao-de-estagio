@@ -4,7 +4,7 @@ namespace App\Http\DTO\Response;
 
 use JsonSerializable;
 
-class EstagioStatusDTO implements JsonSerializable {
+class InternshipStatusDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
@@ -14,8 +14,8 @@ class EstagioStatusDTO implements JsonSerializable {
 
     public static function fromUser(object $user): self {
         return new self(
-            $user->perfil_id,
-            $user->perfil_name,
+            $user->role_id,
+            $user->role_name,
         );
     }
 

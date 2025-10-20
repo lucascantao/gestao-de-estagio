@@ -2,56 +2,56 @@
 
 namespace App\Http\DTO\Response;
 
-use App\Models\Estagio;
+use App\Models\InternshipModel;
 use JsonSerializable;
 
-class EstagioDTO implements JsonSerializable {
+class InternshipDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
         protected string $workload,
-        protected string $dayPeriod,
+        protected string $schedule,
         protected string $startDate,
         protected string $endDate,
         protected float $salary,
         protected ?string $observation,
         protected string $supervisor,
-        protected int $empresas_id,
-        protected EstagioStatusDTO $status,
+        protected int $company_id,
+        protected InternshipStatusDTO $status,
         protected UserDTO $user
     )
     { }
 
-    public static function fromEstagio(Estagio $estagio): self {
-        $status = new EstagioStatusDTO(
-            $estagio->estagio_status_id,
-            $estagio->estagio_status_name
+    public static function fromIntership(InternshipModel $internship): self {
+        $status = new InternshipStatusDTO(
+            $internship->internship_status_id,
+            $internship->internship_status_name
         );
-        $perfil = new PerfilDTO(
-            $estagio->perfil_id,
-            $estagio->perfil_name
+        $role = new RoleDTO(
+            $internship->role_id,
+            $internship->role_name
         );
-        $curso = new CursoDTO(
-            $estagio->curso_id,
-            $estagio->curso_name
+        $course = new CourseDTO(
+            $internship->course_id,
+            $internship->course_name
         );
         $user = new UserDTO(
-            $estagio->user_id,
-            $estagio->user_name,
-            $estagio->user_email,
-            $perfil,
-            $curso
+            $internship->user_id,
+            $internship->user_name,
+            $internship->user_email,
+            $role,
+            $course
         );
         return new self(
-            $estagio->id,
-            $estagio->workload,
-            $estagio->day_period,
-            $estagio->start_date,
-            $estagio->end_date,
-            $estagio->salary,
-            $estagio->observation,
-            $estagio->supervisor,
-            $estagio->empresas_id,
+            $internship->id,
+            $internship->workload,
+            $internship->schedule,
+            $internship->start_date,
+            $internship->end_date,
+            $internship->salary,
+            $internship->observation,
+            $internship->supervisor,
+            $internship->company_id,
             $status,
             $user
         );
@@ -62,14 +62,14 @@ class EstagioDTO implements JsonSerializable {
         return [
             'id' => $this->id,
             'workload' => $this->workload,
-            'day_period' => $this->dayPeriod,
+            'schedule' => $this->schedule,
             'start_date' => $this->startDate,
             'end_date' => $this->endDate,
             'salary' => $this->salary,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
-            'empresas_id' => $this->empresas_id,
-            'estagios_status_id' => $this->status->toArray(),
+            'company_id' => $this->company_id,
+            'internship_status_id' => $this->status->toArray(),
             'user' => $this->user->toArray()
         ];
     }
@@ -82,8 +82,8 @@ class EstagioDTO implements JsonSerializable {
         return $this->workload;
     }
 
-    public function getDayPeriod(): string {
-        return $this->dayPeriod;
+    public function getSchedule(): string {
+        return $this->schedule;
     }
 
     public function getStartDate(): string {
@@ -106,11 +106,11 @@ class EstagioDTO implements JsonSerializable {
         return $this->supervisor;
     }
 
-    public function getEmpresasId(): int {
-        return $this->empresas_id;
+    public function getCompanyId(): int {
+        return $this->company_id;
     }
 
-    public function getEstagiosStatusId(): EstagioStatusDTO {
+    public function getIntershipStatusId(): InternshipStatusDTO {
         return $this->status;
     }
 

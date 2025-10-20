@@ -2,14 +2,14 @@
 
 namespace App\Http\DTO\Request;
 
-use App\Models\Estagio;
+
 use JsonSerializable;
 
-class UpdateEstagioRequestDTO implements JsonSerializable {
+class UpdateInternshipRequestDTO implements JsonSerializable {
 
     public function __construct(
         protected ?string $workload,
-        protected ?string $dayPeriod,
+        protected ?string $schedule,
         protected ?string $startDate,
         protected ?string $endDate,
         protected ?float $salary,
@@ -21,7 +21,7 @@ class UpdateEstagioRequestDTO implements JsonSerializable {
     public static function fromRequest(array $request): self {
         return new self(
             $request['workload'] ?? null,
-            $request['dayPeriod'] ?? null,
+            $request['schedule'] ?? null,
             $request['startDate'] ?? null,
             $request['endDate'] ?? null,
             $request['salary'] ?? null,
@@ -34,7 +34,7 @@ class UpdateEstagioRequestDTO implements JsonSerializable {
     {
         return [
             'workload' => $this->workload,
-            'dayPeriod' => $this->dayPeriod,
+            'schedule' => $this->schedule,
             'startDate' => $this->startDate,
             'endDate' => $this->endDate,
             'salary' => $this->salary,
@@ -47,7 +47,7 @@ class UpdateEstagioRequestDTO implements JsonSerializable {
     {
         return array_filter([
             'workload' => $this->workload,
-            'day_period' => $this->dayPeriod,
+            'schedule' => $this->schedule,
             'start_date' => $this->startDate,
             'end_date' => $this->endDate,
             'salary' => $this->salary,

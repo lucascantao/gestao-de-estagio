@@ -12,8 +12,8 @@ class UserDTO implements JsonSerializable {
         protected int $id,
         protected string $name,
         protected string $email,
-        protected PerfilDTO $perfil,
-        protected CursoDTO $curso,
+        protected RoleDTO $role,
+        protected CourseDTO $course,
     )
     { }
 
@@ -22,8 +22,8 @@ class UserDTO implements JsonSerializable {
             $user->id,
             $user->name,
             $user->email,
-            PerfilDTO::fromUser($user),
-            CursoDTO::fromUser($user),
+            RoleDTO::fromUser($user),
+            CourseDTO::fromUser($user),
         );
     }
 
@@ -33,8 +33,8 @@ class UserDTO implements JsonSerializable {
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'perfil' => $this->perfil->toArray(),
-            'curso' => $this->curso->toArray(),
+            'role' => $this->role->toArray(),
+            'course' => $this->course->toArray(),
         ];
     }
 
@@ -50,12 +50,12 @@ class UserDTO implements JsonSerializable {
         return $this->email;
     }
 
-    public function getPerfil(): PerfilDTO {
-        return $this->perfil;
+    public function getRole(): RoleDTO {
+        return $this->role;
     }
 
-    public function getCurso(): CursoDTO {
-        return $this->curso;
+    public function getCourse(): CourseDTO {
+        return $this->course;
     }
 
     public function jsonSerialize(): mixed {

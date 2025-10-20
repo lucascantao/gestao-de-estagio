@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\EstagioController;
+use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +21,13 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/reset-password', 'resetPassword');
 });
 
-Route::controller(EstagioController::class)->group(function () {
-    Route::prefix('estagio')->group(function () {
-        Route::get('/', 'getAllEstagios'); // Listar Estágios
-        Route::get('/{id}', 'getEstagioById'); // Buscar Estágio por ID
-        Route::post('/', 'storeEstagio'); // Cadastrar Estágio
-        Route::put('/{id}', 'updateEstagio'); // Atualizar Estágio
-        Route::post('/update-status', 'updateEstagioStatus'); // Atualizar Status do Estágio
+Route::controller(InternshipController::class)->group(function () {
+    Route::prefix('internship')->group(function () {
+        Route::get('/', 'getAllInternships'); // Listar Estágios
+        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID
+        Route::post('/', 'storeInternship'); // Cadastrar Estágio
+        Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
+        Route::post('/update-status', 'updateInternshipStatus'); // Atualizar Status do Estágio
         // Submeter Documentação
         // Acompanhar Estágio
     });

@@ -25,10 +25,7 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
                 'users.*',
                 DB::raw("CASE WHEN users.deleted_at IS NULL THEN 'Ativo' ELSE 'Inativo' END as status"),
                 'roles.name as roles_name',
-                'roles.description as roles_description',
-                'roles.id as roles_id',
-                'partners.id as partners_id',
-                'partners.name as partners_name'
+                'roles.id as role_id',
             ])
                 ->join( 'roles', 'users.roles_id', '=', 'roles.id')
                 ->leftJoin('partners', 'users.partners_id', '=', 'partners.id')

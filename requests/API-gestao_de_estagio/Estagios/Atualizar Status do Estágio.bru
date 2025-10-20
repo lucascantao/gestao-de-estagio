@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:8000/api/estagio/update-status
+  url: http://localhost:8000/api/internship/update-status
   body: json
   auth: inherit
 }
@@ -13,10 +13,11 @@ post {
 body:json {
   {
     "statusId": 2,
-    "estagioId": 6
+    "internshipId": 6
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
