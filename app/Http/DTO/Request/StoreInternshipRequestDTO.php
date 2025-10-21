@@ -63,7 +63,7 @@ class StoreInternshipRequestDTO implements JsonSerializable {
             'start_date' => $this->startDate,
             'end_date' => $this->endDate,
             'salary' => $this->salary,
-            'users_id' => $this->userId,
+            'user_id' => $this->userId,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
             'company_id' => $this->companyId,
