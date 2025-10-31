@@ -10,8 +10,8 @@ class UserRegisterRequestDTO {
         protected string $name,
         protected string $email,
         protected string $password,
-        protected int $profileId,
-        protected int $cursoId,
+        protected ?int $roleId,
+        protected ?int $courseId,
         // string $address,
         // string $phoneNumber,
         // ?string $birthdate = null,
@@ -24,8 +24,8 @@ class UserRegisterRequestDTO {
             $data['name'],
             $data['email'],
             $data['password'],
-            $data['roleId'],
-            $data['cursoId'],
+            $data['roleId'] ?? null,
+            $data['courseId'] ?? null,
             // $data['address'],
             // $data['phone'],
             // $data['birthdate'] ?? null,
@@ -38,8 +38,8 @@ class UserRegisterRequestDTO {
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'role_id' => $this->profileId,
-            'course_id' => $this->cursoId,
+            'role_id' => $this->roleId,
+            'course_id' => $this->courseId,
             // 'address' => $this->address,
             // 'phone_number' => $this->phoneNumber,
             // 'birthdate' => $this->birthdate,
@@ -55,11 +55,14 @@ class UserRegisterRequestDTO {
     public function getPassword(): string {
         return $this->password;
     }
-    public function getProfileId(): int {
-        return $this->profileId;
+    public function getRoleId(): ?int {
+        return $this->roleId;
     }
-    public function getCursoId(): int {
-        return $this->cursoId;
+    public function getCursoId(): ?int {
+        return $this->courseId;
+    }
+    public function setRoleId(?int $roleId) {
+        $this->roleId = $roleId;
     }
 
 }

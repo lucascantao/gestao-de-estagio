@@ -35,14 +35,14 @@ class UserController
         }
     }
 
-//     public function register(RegisterRequest $request): JsonResponse {
-//         return response()->json(
-//             $this->userService->register(
-//                 UserRegisterRequestDTO::fromArray($request->toArray())
-//             ),
-//             201
-//         );
-//     }
+    public function register(RegisterRequest $request): JsonResponse {
+        return response()->json(
+            $this->userService->register(
+                UserRegisterRequestDTO::fromArray($request->toArray())
+            ),
+            201
+        );
+    }
 
 //    public function logout(Request $request): JsonResponse
 //    {

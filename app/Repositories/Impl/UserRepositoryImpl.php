@@ -24,12 +24,10 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
         try {
             $query = $this->model::query()->select([
                 'users.*',
-                DB::raw("CASE WHEN users.deleted_at IS NULL THEN 'Ativo' ELSE 'Inativo' END as status"),
                 'roles.name as roles_name',
                 'roles.id as role_id',
             ])
-                ->join( 'roles', 'users.roles_id', '=', 'roles.id')
-                ->leftJoin('partners', 'users.partners_id', '=', 'partners.id')
+                ->join( 'roles', 'users.role_id', '=', 'roles.id')
                 ->where($this->model->getTable() . ".id", "=", $id);
             return $query->firstOrFail();
         }

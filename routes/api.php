@@ -16,6 +16,7 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'login');
+    Route::post('/register', 'register');
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/verify-token', 'verifyToken');
     Route::post('/reset-password', 'resetPassword');
