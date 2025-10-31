@@ -33,103 +33,103 @@ class UserService {
         return UserAuthResponseDTO::fromAuthSuccess('Login realizado com sucesso', $user, $token);
     }
 
-    public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
-        $user = $this->userRepository->store($dto->toInsertArray());
-        $userModel = $this->userRepository->findUserById($user->getAttribute('id'));
-        $token = $user->createToken($user->getAttribute('name') . '_auth_token')->plainTextToken;
-        return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token);
-    }
+//     public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
+//         $user = $this->userRepository->store($dto->toInsertArray());
+//         $userModel = $this->userRepository->findUserById($user->getAttribute('id'));
+//         $token = $user->createToken($user->getAttribute('name') . '_auth_token')->plainTextToken;
+//         return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token);
+//     }
 
-   public function logout(int $userId): array
-   {
-       $user = $this->userRepository->findById($userId);
+//    public function logout(int $userId): array
+//    {
+//        $user = $this->userRepository->findById($userId);
 
-       if (!$user) {
-           throw new BadRequestException('Usuário não encontrado');
-       }
+//        if (!$user) {
+//            throw new BadRequestException('Usuário não encontrado');
+//        }
 
-       try {
-           $user->tokens()->delete();
-           return ['message' => 'Logout realizado com sucesso'];
-       } catch (\Exception $e) {
-           throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
-       }
-   }
+//        try {
+//            $user->tokens()->delete();
+//            return ['message' => 'Logout realizado com sucesso'];
+//        } catch (\Exception $e) {
+//            throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
+//        }
+//    }
 
-    public function forgotPassword(string $email): void
-    {
-        $user = $this->userRepository->findByEmail($email);
-        if (!$user) {
-            throw new BadRequestException('Email não encontrado');
-        }
+//     public function forgotPassword(string $email): void
+//     {
+//         $user = $this->userRepository->findByEmail($email);
+//         if (!$user) {
+//             throw new BadRequestException('Email não encontrado');
+//         }
 
-        $token = strtoupper(Str::random(6));
+//         $token = strtoupper(Str::random(6));
 
-        $data = [
-            'assunto' => 'Recuperação de senha',
-            'nome' => $user->name,
-            'email' => $user->email,
-            'token' => $token,
-        ];
+//         $data = [
+//             'assunto' => 'Recuperação de senha',
+//             'nome' => $user->name,
+//             'email' => $user->email,
+//             'token' => $token,
+//         ];
 
-        Cache::put("password_reset_{$email}", $token, now()->addMinutes(5));
+//         Cache::put("password_reset_{$email}", $token, now()->addMinutes(5));
 
-        try {
-            Log::info('Tentando enviar email de recuperação', ['email' => $email]);
+//         try {
+//             Log::info('Tentando enviar email de recuperação', ['email' => $email]);
 
-            Mail::send(new PasswordReminderMailable($data));
+//             Mail::send(new PasswordReminderMailable($data));
 
-            Log::info('Email enviado com sucesso', ['email' => $email]);
-        } catch (\Exception $e) {
-            Log::error('Erro ao enviar email', [
-                'email' => $email,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            throw new BadRequestException('Erro ao enviar email de recuperação: ' . $e->getMessage());
-        }
-    }
+//             Log::info('Email enviado com sucesso', ['email' => $email]);
+//         } catch (\Exception $e) {
+//             Log::error('Erro ao enviar email', [
+//                 'email' => $email,
+//                 'error' => $e->getMessage(),
+//                 'trace' => $e->getTraceAsString()
+//             ]);
+//             throw new BadRequestException('Erro ao enviar email de recuperação: ' . $e->getMessage());
+//         }
+//     }
 
-    public function verifyToken(VerifyTokenRequestDTO $dto): array
-    {
-        $isValid = $this->userRepository->validateResetToken(
-            $dto->getEmail(),
-            $dto->getToken()
-        );
+//     public function verifyToken(VerifyTokenRequestDTO $dto): array
+//     {
+//         $isValid = $this->userRepository->validateResetToken(
+//             $dto->getEmail(),
+//             $dto->getToken()
+//         );
 
-        if (!$isValid) {
-            throw new BadRequestException('Token inválido ou expirado');
-        }
+//         if (!$isValid) {
+//             throw new BadRequestException('Token inválido ou expirado');
+//         }
 
-        return [
-            'message' => 'Token válido',
-            'valid' => true
-        ];
-    }
+//         return [
+//             'message' => 'Token válido',
+//             'valid' => true
+//         ];
+//     }
 
-    public function resetPassword(ResetPasswordRequestDTO $dto): void
-    {
-        $user = $this->userRepository->findByEmail($dto->getEmail());
-        if (!$user) {
-            throw new BadRequestException('Usuário não encontrado');
-        }
+//     public function resetPassword(ResetPasswordRequestDTO $dto): void
+//     {
+//         $user = $this->userRepository->findByEmail($dto->getEmail());
+//         if (!$user) {
+//             throw new BadRequestException('Usuário não encontrado');
+//         }
 
-        if (!$this->userRepository->validateResetToken($dto->getEmail(), $dto->getToken())) {
-            throw new BadRequestException('Token inválido ou expirado');
-        }
+//         if (!$this->userRepository->validateResetToken($dto->getEmail(), $dto->getToken())) {
+//             throw new BadRequestException('Token inválido ou expirado');
+//         }
 
-        $this->userRepository->updatePassword($user->id, $dto->getPassword());
-        Cache::forget("password_reset_{$dto->getEmail()}");
-    }
+//         $this->userRepository->updatePassword($user->id, $dto->getPassword());
+//         Cache::forget("password_reset_{$dto->getEmail()}");
+//     }
 
 
-    public function updatePassword(UpdatePasswordRequestDTO $dto): void
-    {
-        $user = $this->userRepository->findById($dto->getUserId());
-        if (!$user || !Hash::check($dto->getCurrentPassword(), $user->password)) {
-            throw new BadRequestException('Senha atual inválida');
-        }
+//     public function updatePassword(UpdatePasswordRequestDTO $dto): void
+//     {
+//         $user = $this->userRepository->findById($dto->getUserId());
+//         if (!$user || !Hash::check($dto->getCurrentPassword(), $user->password)) {
+//             throw new BadRequestException('Senha atual inválida');
+//         }
 
-        $this->userRepository->updatePassword($user->id, $dto->getPassword());
-    }
+//         $this->userRepository->updatePassword($user->id, $dto->getPassword());
+//     }
 }

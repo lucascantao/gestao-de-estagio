@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 // use App\Models\Estagio;
 
@@ -30,8 +31,7 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
                 ->join( 'roles', 'users.roles_id', '=', 'roles.id')
                 ->leftJoin('partners', 'users.partners_id', '=', 'partners.id')
                 ->where($this->model->getTable() . ".id", "=", $id);
-            return $query
-            ->firstOrFail();
+            return $query->firstOrFail();
         }
         catch (ModelNotFoundException $e) {
             throw new NotFoundException("Id inválido: " . $id);
@@ -39,6 +39,23 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
         catch (Exception $e) {
             throw new DatabaseException("Erro ao buscar usuário: " . $e->getMessage());
         }
+    }
+
+
+    public function findByEmail(string $email): ?UserModel {
+        $query = UserModel::join('roles', 'users.role_id', '=', 'roles.id')
+                    ->select(
+                        'users.id',
+                        'users.name',
+                        'users.email',
+                        'users.password',
+                        'users.created_at',
+                        'users.updated_at',
+                        'roles.name as roles_name',
+                        'roles.id as roles_id',
+                    )
+                    ->where('email', $email);
+        return $query->first();
     }
 
 
