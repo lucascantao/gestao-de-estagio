@@ -16,9 +16,9 @@ class InternshipDTO implements JsonSerializable {
         protected float $salary,
         protected ?string $observation,
         protected string $supervisor,
-        protected int $company_id,
+        protected CompanyDTO $company,
         protected InternshipStatusDTO $status,
-        protected UserDTO $user
+        protected StudentDTO $user
     )
     { }
 
@@ -35,13 +35,22 @@ class InternshipDTO implements JsonSerializable {
             $internship->course_id,
             $internship->course_name
         );
-        $user = new UserDTO(
-            $internship->user_id,
-            $internship->user_name,
-            $internship->user_email,
-            $role,
+        $user = new StudentDTO(
+            $internship->student_id,
+            $internship->student_name,
+            $internship->student_email,
+            $internship->student_number,
             $course
         );
+        $company = new CompanyDTO(
+            $internship->company_id,
+            $internship->company_name,
+            null,
+            null,
+            null,
+            null
+        );
+
         return new self(
             $internship->id,
             $internship->workload,
@@ -51,7 +60,7 @@ class InternshipDTO implements JsonSerializable {
             $internship->salary,
             $internship->observation,
             $internship->supervisor,
-            $internship->company_id,
+            $company,
             $status,
             $user
         );
@@ -68,7 +77,7 @@ class InternshipDTO implements JsonSerializable {
             'salary' => $this->salary,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
-            'company_id' => $this->company_id,
+            'company' => $this->company->toArray(),
             'internship_status_id' => $this->status->toArray(),
             'user' => $this->user->toArray()
         ];
@@ -106,15 +115,15 @@ class InternshipDTO implements JsonSerializable {
         return $this->supervisor;
     }
 
-    public function getCompanyId(): int {
-        return $this->company_id;
+    public function getCompany(): CompanyDTO {
+        return $this->company;
     }
 
     public function getIntershipStatusId(): InternshipStatusDTO {
         return $this->status;
     }
 
-    public function getUser(): UserDTO {
+    public function getUser(): StudentDTO {
         return $this->user;
     }
 

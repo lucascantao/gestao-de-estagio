@@ -26,6 +26,11 @@ class InternshipRequest extends FormRequest
             'perPage' => 'required|integer|min:1',
             'sort' => 'nullable|string',
             'direction' => 'nullable|in:asc,desc',
+
+            'userId' => 'nullable|integer|min:1',
+            'search' => 'nullable|string|max:255',
+            // 'status' => 'nullable|integer|exists:communities_kit_status,id',
+            'filters' => 'nullable|array',
         ];
     }
 

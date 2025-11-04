@@ -24,7 +24,7 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(InternshipController::class)->group(function () {
     Route::prefix('internship')->group(function () {
-        Route::get('/', 'getAllInternships'); // Listar Estágios
+        Route::post('/list', 'getAllInternships'); // Listar Estágios
         Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID
         Route::post('/', 'storeInternship'); // Cadastrar Estágio
         Route::put('/{id}', 'updateInternship'); // Atualizar Estágio

@@ -25,12 +25,14 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
             'internships.salary',
             'internships.observation',
             'internships.supervisor',
-            'internships.company_id',
             'internship_status.id as internship_status_id',
             'internship_status.name as internship_status_name',
-            'users.id as user_id',
-            'users.name as user_name',
-            'users.email as user_email',
+            'companies.id as company_id',
+            'companies.name as company_name',
+            'users.id as student_id',
+            'user_enrollments.student_number',
+            'users.name as student_name',
+            'users.email as student_email',
             'roles.id as role_id',
             'roles.name as role_name',
             'courses.id as course_id',
@@ -38,8 +40,10 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         )
         ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
         ->join('users', 'internships.user_id', '=', 'users.id')
+        ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+        ->join('companies', 'internships.company_id', '=', 'companies.id')
         ->join('roles', 'users.role_id', '=', 'roles.id')
-        ->join('courses', 'users.course_id', '=', 'courses.id')
+        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
         ->where('internships.id', '=', $id);
 
         return $query->first();
@@ -55,12 +59,14 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
             'internships.salary',
             'internships.observation',
             'internships.supervisor',
-            'internships.company_id',
             'internship_status.id as internship_status_id',
             'internship_status.name as internship_status_name',
-            'users.id as user_id',
-            'users.name as user_name',
-            'users.email as user_email',
+            'companies.id as company_id',
+            'companies.name as company_name',
+            'users.id as student_id',
+            'user_enrollments.student_number',
+            'users.name as student_name',
+            'users.email as student_email',
             'roles.id as role_id',
             'roles.name as role_name',
             'courses.id as course_id',
@@ -68,8 +74,10 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         )
         ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
         ->join('users', 'internships.user_id', '=', 'users.id')
+        ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+        ->join('companies', 'internships.company_id', '=', 'companies.id')
         ->join('roles', 'users.role_id', '=', 'roles.id')
-        ->join('courses', 'users.course_id', '=', 'courses.id')
+        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
         ->orderBy('internships.id', 'desc');
 
         return $query->paginate($perPage, ['*'], 'page', $page);

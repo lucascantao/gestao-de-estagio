@@ -4,15 +4,23 @@ meta {
   seq: 1
 }
 
-get {
-  url: http://localhost:8000/api/internship?page=1&perPage=15
-  body: none
+post {
+  url: http://localhost:8000/api/internship/list?page=1&perPage=15
+  body: json
   auth: inherit
 }
 
 params:query {
   page: 1
   perPage: 15
+}
+
+body:json {
+  {
+  //   "filters": [
+      
+  //   ]
+  }
 }
 
 settings {

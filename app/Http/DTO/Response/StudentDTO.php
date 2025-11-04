@@ -6,13 +6,13 @@ use App\Models\Estagio;
 use App\Models\UserModel;
 use JsonSerializable;
 
-class UserDTO implements JsonSerializable {
+class StudentDTO implements JsonSerializable {
 
     public function __construct(
         protected int $id,
         protected string $name,
         protected string $email,
-        protected RoleDTO $role,
+        protected string $studentNumber,
         protected CourseDTO $course,
     )
     { }
@@ -22,7 +22,7 @@ class UserDTO implements JsonSerializable {
             $user->id,
             $user->name,
             $user->email,
-            RoleDTO::fromUser($user),
+            $user->student_number,
             CourseDTO::fromUser($user),
         );
     }
@@ -33,7 +33,7 @@ class UserDTO implements JsonSerializable {
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'role' => $this->role->toArray(),
+            'studentNumber' => $this->studentNumber,
             'course' => $this->course->toArray(),
         ];
     }
@@ -50,8 +50,8 @@ class UserDTO implements JsonSerializable {
         return $this->email;
     }
 
-    public function getRole(): RoleDTO {
-        return $this->role;
+    public function getStudentNumber(): string {
+        return $this->studentNumber;
     }
 
     public function getCourse(): CourseDTO {
