@@ -25,11 +25,10 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(InternshipController::class)->group(function () {
     Route::prefix('internship')->group(function () {
         Route::post('/list', 'getAllInternships'); // Listar Estágios
-        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID
+        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID / Acompanhar Estágio
         Route::post('/', 'storeInternship'); // Cadastrar Estágio
         Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
         Route::post('/update-status', 'updateInternshipStatus'); // Atualizar Status do Estágio
-        // Submeter Documentação
-        // Acompanhar Estágio
+        Route::post('/submit-docs', 'submitInternshipDocs');// Submeter Documentação
     });
 });

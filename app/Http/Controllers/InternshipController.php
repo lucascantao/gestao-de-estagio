@@ -6,6 +6,7 @@ use App\Http\DTO\Request\StoreInternshipRequestDTO;
 use App\Http\DTO\Request\UpdateInternshipRequestDTO;
 use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\CreateInternshipRequest;
+use App\Http\Requests\InternshipDocumentRequest;
 use App\Http\Requests\InternshipRequest;
 use App\Http\Requests\UpdateInternshipRequest;
 use App\Services\InternshipService;
@@ -65,6 +66,17 @@ class InternshipController
             $this->internshipService->updateInternshipStatus(
                     $request->input('internshipId'),
                     $request->input('statusId'),
+                )
+            )
+        );
+    }
+
+    public function submitInternshipDocs(InternshipDocumentRequest $request) {
+        return response()
+        ->json(APIResponseDTO::fromData(
+            $this->internshipService->submitInternshipDocs(
+                    $request->input('internshipId'),
+                    $request->file('file')
                 )
             )
         );

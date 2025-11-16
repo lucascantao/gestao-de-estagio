@@ -9,7 +9,7 @@ use App\Http\DTO\Request\User\UserRegisterRequestDTO;
 use App\Http\DTO\Request\User\VerifyTokenRequestDTO;
 use App\Http\DTO\Response\User\UserAuthResponseDTO;
 use App\Repositories\Interface\UserRepository;
-use App\utils\traits\Exception;
+use App\utils\traits\ExceptionTrait;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserService {
 
-    use Exception;
+    use ExceptionTrait;
 
     public function __construct(
         protected UserRepository $userRepository

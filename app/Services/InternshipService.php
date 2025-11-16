@@ -8,16 +8,18 @@ use App\Http\DTO\Response\InternshipDTO;
 use App\Http\DTO\Response\PageResponseDTO;
 use App\Repositories\Interface\CompanyRepository;
 use App\Repositories\Interface\InternshipRepository;
-use App\utils\traits\Exception;
+use App\utils\traits\ExceptionTrait;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class InternshipService {
 
-    use Exception;
+    use ExceptionTrait;
 
     public function __construct(
         protected InternshipRepository $intershipRepository,
-        protected CompanyRepository $companyRepository
+        protected CompanyRepository $companyRepository,
+        protected FileStorageService $fileStorageService
     ) {
     }
 
@@ -83,6 +85,39 @@ class InternshipService {
             $response['data'] = ['message' => 'Status do Estágio atualizado com sucesso.'];
             $response['status'] = 'success';
         } catch (\Exception $e) {
+            $response['status'] = 'error';
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+        }
+
+        return $response;
+    }
+
+    public function submitInternshipDocs(int $internshipId, object $document): array {
+        $response = [];
+        try {
+                    
+            $timestamp = now()->format('Y-m-d_H-i-s');
+            $extension = $document->getClientOriginalExtension();
+            $filename = "{$internshipId}_{$timestamp}.{$extension}";
+            $subfolder = "internships/{$internshipId}/documents/";
+            $fileContent = file_get_contents($document->getRealPath());
+            
+            $this->fileStorageService->storeFile($filename, $fileContent, $subfolder);
+            
+            $userId = $this->intershipRepository->getUserIdByInternshipId($internshipId);
+
+            $this->intershipRepository->insertDocument([
+                'path' => $subfolder . $filename,
+                'filename' => $filename,
+                'internship_id' => $internshipId,
+                'user_id' => $userId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $response['data'] = ['message' => 'Documentação do Estágio enviada com sucesso.'];
+            $response['status'] = 'success';
+        } catch (Exception $e) {
             $response['status'] = 'error';
             $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
         }

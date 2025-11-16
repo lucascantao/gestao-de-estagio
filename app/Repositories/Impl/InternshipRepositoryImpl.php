@@ -82,4 +82,16 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
 
         return $query->paginate($perPage, ['*'], 'page', $page);
     }
+
+    public function getUserIdByInternshipId(int $internshipId): ?int {
+        $internship = $this->model::select('user_id')
+            ->where('id', '=', $internshipId)
+            ->first();
+
+        return $internship ? $internship->user_id : null;
+    }
+
+    public function insertDocument(array $data): void {
+        DB::table('documents')->insert($data);
+    }
 }

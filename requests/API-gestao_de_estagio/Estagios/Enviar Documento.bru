@@ -1,12 +1,12 @@
 meta {
-  name: Criar Estágio
+  name: Enviar Documento
   type: http
-  seq: 2
+  seq: 6
 }
 
 post {
-  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/internship
-  body: json
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/internship/submit-docs
+  body: multipartForm
   auth: inherit
 }
 
@@ -25,10 +25,15 @@ body:json {
       "name": "Empresa XYZ",
       "address": "Rua ABC",
       "cnpj": "A12B.SALÇD/ALDJDKLAS-10AD8",
-      "email":"email@gmail.com",
-      "phone":"(99) 99187-8008"
+      "email": "email@gmail.com",
+      "phone": "(99) 99187-8008"
     }
   }
+}
+
+body:multipart-form {
+  internshipId: 2
+  file: @file(C:\Users\mauro\Downloads\kaelen_character_sheet.pdf)
 }
 
 settings {

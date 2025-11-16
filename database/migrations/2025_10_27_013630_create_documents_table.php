@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('path', 255);
+            $table->string('filename', 255);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('internship_id')->constrained('internships')->cascadeOnDelete();
             $table->timestamps();
