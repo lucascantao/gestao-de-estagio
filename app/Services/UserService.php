@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Http\DTO\Request\User\ResetPasswordRequestDTO;
 use App\Http\DTO\Request\User\UpdatePasswordRequestDTO;
+use App\Http\DTO\Response\InternshipDTO;
+use App\Http\DTO\Response\User\UserDTO;
 use App\Http\DTO\Request\User\UserLoginRequestDTO;
 use App\Http\DTO\Request\User\UserRegisterRequestDTO;
 use App\Http\DTO\Request\User\VerifyTokenRequestDTO;
 use App\Http\DTO\Response\User\UserAuthResponseDTO;
+use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\UserRepository;
 use App\utils\traits\ExceptionTrait;
 use Illuminate\Support\Facades\Cache;
@@ -20,7 +23,8 @@ class UserService {
     use ExceptionTrait;
 
     public function __construct(
-        protected UserRepository $userRepository
+        protected UserRepository $userRepository,
+        protected InternshipRepository $internshipRepository,
     ) {}
 
     public function login(UserLoginRequestDTO $dto): UserAuthResponseDTO {
@@ -136,4 +140,18 @@ class UserService {
 
 //         $this->userRepository->updatePassword($user->id, $dto->getPassword());
 //     }
+
+        public function getUserDetails(int $userId) { 
+            $user = UserDTO::fromUser($this->userRepository->findUserById($userId));
+
+            $internship = $this->internshipRepository->getInternshipByUserId($userId);
+            $dto = $internship 
+                ? InternshipDTO::fromUser($internship)->toStudentDetailsArray() 
+                : null;
+            // dd($internship);
+            return  [
+                ...$user->toArray(),
+                'internship' => $dto,
+            ];
+        }
 }

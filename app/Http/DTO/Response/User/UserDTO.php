@@ -29,8 +29,8 @@ class UserDTO implements JsonSerializable {
             $user->getAttribute('id'),
             $user->getAttribute('name'),
             $user->getAttribute('email'),
-            $user->getAttribute('roles_id'),
-            $user->getAttribute('roles_name'),
+            $user->getAttribute('role_id'),
+            $user->getAttribute('role_name'),
         );
     }
 
@@ -39,8 +39,8 @@ class UserDTO implements JsonSerializable {
             $user->id ?? null,
             $user->name ?? null,
             $user->email ?? null,
-            $user->roles_id ?? null,
-            $user->roles_name ?? null,
+            $user->role_id ?? null,
+            $user->role_name ?? null,
         );
     }
 

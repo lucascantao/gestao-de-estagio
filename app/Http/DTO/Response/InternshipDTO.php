@@ -11,11 +11,11 @@ class InternshipDTO implements JsonSerializable {
         protected int $id,
         protected string $workload,
         protected string $schedule,
-        protected string $startDate,
-        protected string $endDate,
+        protected ?string $startDate,
+        protected ?string $endDate,
         protected float $salary,
         protected ?string $observation,
-        protected string $supervisor,
+        protected ?string $supervisor,
         protected CompanyDTO $company,
         protected InternshipStatusDTO $status,
         protected StudentDTO $user
@@ -66,6 +66,48 @@ class InternshipDTO implements JsonSerializable {
         );
     }
 
+    public static function fromUser(InternshipModel $internship): self {
+        $status = new InternshipStatusDTO(
+            $internship->internship_status_id,
+            $internship->internship_status_name
+        );
+        $course = new CourseDTO(
+            $internship->course_id,
+            $internship->course_name
+        );
+        $user = new StudentDTO(
+            null,
+            null,
+            null,
+            $internship->student_number,
+            $course
+        );
+        $company = new CompanyDTO(
+            $internship->company_id,
+            $internship->company_name,
+            null,
+            null,
+            null,
+            null
+        );
+
+        return new self(
+            $internship->id,
+            $internship->workload,
+            $internship->schedule,
+            null,
+            null,
+            $internship->salary,
+            null,
+            null,
+            $company,
+            $status,
+            $user
+        );
+    }
+
+
+
     public function toArray(): array
     {
         return [
@@ -80,6 +122,18 @@ class InternshipDTO implements JsonSerializable {
             'company' => $this->company->toArray(),
             'internship_status_id' => $this->status->toArray(),
             'user' => $this->user->toArray()
+        ];
+    }
+
+    public function toStudentDetailsArray(): array {
+        return [
+            'id' => $this->id,
+            'workload' => $this->workload,
+            'schedule' => $this->schedule,
+            'salary' => $this->salary,
+            'company' => $this->company->toArray(),
+            'internship_status' => $this->status->toArray(),
+            'student_number' => $this->user->getStudentNumber(),
         ];
     }
 

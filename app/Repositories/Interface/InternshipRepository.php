@@ -9,6 +9,8 @@ interface InternshipRepository extends BaseRepository {
     public function getAllInternships(int $page, int $perPage): LengthAwarePaginator;
 
     public function getInternshipById(int $id);
+    
+    public function getInternshipByUserId(int $userId);
 
     public function getUserIdByInternshipId(int $internshipId): ?int;
 

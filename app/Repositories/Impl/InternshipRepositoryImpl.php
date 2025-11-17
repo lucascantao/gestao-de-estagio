@@ -49,6 +49,30 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         return $query->first();
     }
 
+    public function getInternshipByUserId(int $userId): ?InternshipModel {
+        $query = $this->model::select(
+            'internships.id',
+            'internships.workload',
+            'internships.schedule',
+            'internships.salary',
+            'internship_status.id as internship_status_id',
+            'internship_status.name as internship_status_name',
+            'companies.id as company_id',
+            'companies.name as company_name',
+            'user_enrollments.student_number',
+            'courses.id as course_id',
+            'courses.name as course_name',
+        )
+        ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
+        ->join('users', 'internships.user_id', '=', 'users.id')
+        ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+        ->join('companies', 'internships.company_id', '=', 'companies.id')
+        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
+        ->where('internships.user_id', '=', $userId);
+
+        return $query->first();
+    }
+
     public function getAllInternships(int $page, int $perPage): LengthAwarePaginator {
         $query = $this->model::select(
             'internships.id',

@@ -7,7 +7,7 @@ use App\Repositories\Interface\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepository extends BaseRepository {
- public function findUserById(int $id): ?UserModel;
+    public function findUserById(int $id): ?UserModel;
     public function findByEmail(string $email): ?UserModel;
     // public function createUser(array $data): UserModel;
     // public function updateUser(UserModel $user, array $data): ?UserModel;
@@ -17,4 +17,6 @@ interface UserRepository extends BaseRepository {
     // public function validateResetToken(string $email, string $token): bool;
     // public function listAllUsers(int $page, int $perPage, ?string $search, ?string $sort, ?string $direction): LengthAwarePaginator;
     // public function softDelete(int $id): void;
+
+    public function getUserDataById(int $userId): ?UserModel;
 }

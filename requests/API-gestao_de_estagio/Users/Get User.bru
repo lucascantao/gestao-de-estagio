@@ -1,0 +1,16 @@
+meta {
+  name: Get User
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/user/2
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -20,6 +20,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/verify-token', 'verifyToken');
     Route::post('/reset-password', 'resetPassword');
+    Route::get('/user/{id}', 'getUserDetails');
 });
 
 Route::controller(InternshipController::class)->group(function () {

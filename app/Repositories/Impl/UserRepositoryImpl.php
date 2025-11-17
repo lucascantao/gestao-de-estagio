@@ -24,7 +24,7 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
         try {
             $query = $this->model::query()->select([
                 'users.*',
-                'roles.name as roles_name',
+                'roles.name as role_name',
                 'roles.id as role_id',
             ])
                 ->join( 'roles', 'users.role_id', '=', 'roles.id')
@@ -49,10 +49,38 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
                         'users.password',
                         'users.created_at',
                         'users.updated_at',
-                        'roles.name as roles_name',
-                        'roles.id as roles_id',
+                        'roles.name as role_name',
+                        'roles.id as role_id',
                     )
                     ->where('email', $email);
+        return $query->first();
+    }
+
+    public function getUserDataById(int $userId): ?UserModel {
+        $query = $this->model::query()->select([
+            'users.id',
+            'users.name',
+            'users.email',
+            'roles.id as role_id',
+            'roles.name as role_name',
+            'internships.workload',
+            'internships.schedule',
+            'internships.salary',
+            'internship_status.name as internship_status_name',
+            'companies.id as company_id',
+            'companies.name as company_name',
+            'user_enrollments.student_number',
+            'courses.id as course_id',
+            'courses.name as course_name'
+        ])
+        ->where('users.id', '=', $userId)
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->join('internships', 'users.id', '=', 'internships.user_id')
+        ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
+        ->join('companies', 'internships.company_id', '=', 'companies.id')
+        ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id');
+
         return $query->first();
     }
 

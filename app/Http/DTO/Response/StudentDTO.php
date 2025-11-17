@@ -9,11 +9,11 @@ use JsonSerializable;
 class StudentDTO implements JsonSerializable {
 
     public function __construct(
-        protected int $id,
-        protected string $name,
-        protected string $email,
-        protected string $studentNumber,
-        protected CourseDTO $course,
+        protected ?int $id,
+        protected ?string $name,
+        protected ?string $email,
+        protected ?string $studentNumber,
+        protected ?CourseDTO $course,
     )
     { }
 

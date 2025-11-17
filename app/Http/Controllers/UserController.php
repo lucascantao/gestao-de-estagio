@@ -101,4 +101,10 @@ class UserController
 //             return response()->json(['message' => $e->getMessage()], 400);
 //         }
 //     }
+
+        public function getUserDetails(int $userId): JsonResponse {
+            return response()->json(
+                $this->userService->getUserDetails($userId)
+            );
+        }
 }
