@@ -27,7 +27,7 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
                 'roles.name as role_name',
                 'roles.id as role_id',
             ])
-                ->join( 'roles', 'users.role_id', '=', 'roles.id')
+                ->leftJoin( 'roles', 'users.role_id', '=', 'roles.id')
                 ->where($this->model->getTable() . ".id", "=", $id);
             return $query->firstOrFail();
         }
