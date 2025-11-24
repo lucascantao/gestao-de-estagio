@@ -14,6 +14,10 @@ class UserDTO implements JsonSerializable {
         private ?int $id,
         private ?string $name,
         private ?string $email,
+        private ?string $phone,
+        private ?string $address,
+        private ?string $birthdate,
+        private ?string $gender,
         ?int $roleId,
         ?string $roleName,
     )
@@ -21,6 +25,10 @@ class UserDTO implements JsonSerializable {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
+        $this->phone = $phone;
+        $this->address = $address;
+        $this->birthdate = $birthdate;
+        $this->gender = $gender;
         $this->role = ($roleId != null || $roleName != null) ? new UserRoleDTO($roleId, $roleName) : null;
     }
 
@@ -29,6 +37,10 @@ class UserDTO implements JsonSerializable {
             $user->getAttribute('id'),
             $user->getAttribute('name'),
             $user->getAttribute('email'),
+            $user->getAttribute('phone'),
+            $user->getAttribute('address'),
+            $user->getAttribute('birthdate'),
+            $user->getAttribute('gender'),
             $user->getAttribute('role_id'),
             $user->getAttribute('role_name'),
         );
@@ -39,6 +51,10 @@ class UserDTO implements JsonSerializable {
             $user->id ?? null,
             $user->name ?? null,
             $user->email ?? null,
+            $user->phone ?? null,
+            $user->address ?? null,
+            $user->birthdate ?? null,
+            $user->gender ?? null,
             $user->role_id ?? null,
             $user->role_name ?? null,
         );
@@ -50,7 +66,11 @@ class UserDTO implements JsonSerializable {
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'role' => $this->role->toArray(),
+            'phone'=> $this->phone,
+            'address'=> $this->address,
+            'birthdate'=> $this->birthdate,
+            'gender'=> $this->gender,
+            'role' => $this->role ? $this->role->toArray() : null,
         ];
     }
 

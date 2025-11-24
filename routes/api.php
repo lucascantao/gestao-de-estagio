@@ -13,14 +13,16 @@ Route::get('/user', function (Request $request) {
     ]);
 });
 
-
 Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/register', 'register');
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/verify-token', 'verifyToken');
     Route::post('/reset-password', 'resetPassword');
-    Route::get('/user/{id}', 'getUserDetails');
+    Route::prefix('user')->group(function () {
+        Route::get('/{id}', 'getUserDetails');
+    });
+    Route::post('/logout', 'logout');
 });
 
 Route::controller(InternshipController::class)->group(function () {

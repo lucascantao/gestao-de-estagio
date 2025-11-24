@@ -26,4 +26,8 @@ class BaseRepositoryImpl implements BaseRepository{
         }
         return $this->model::where('id', $id)->update($data);
     }
+
+    public function findById(int $id): Model {
+        return $this->model::findOrFail($id);
+    }
 }

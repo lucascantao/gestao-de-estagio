@@ -12,6 +12,10 @@ class StudentDTO implements JsonSerializable {
         protected ?int $id,
         protected ?string $name,
         protected ?string $email,
+        protected ?string $phone,
+        protected ?string $address,
+        protected ?string $birthdate,
+        protected ?string $gender,
         protected ?string $studentNumber,
         protected ?CourseDTO $course,
     )
@@ -22,6 +26,10 @@ class StudentDTO implements JsonSerializable {
             $user->id,
             $user->name,
             $user->email,
+            $user->phone,
+            $user->address,
+            $user->birthdate,
+            $user->gender,
             $user->student_number,
             CourseDTO::fromUser($user),
         );
@@ -33,6 +41,10 @@ class StudentDTO implements JsonSerializable {
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'phone'=> $this->phone,
+            'address'=> $this->address,
+            'birthdate'=> $this->birthdate,
+            'gender'=> $this->gender,
             'studentNumber' => $this->studentNumber,
             'course' => $this->course->toArray(),
         ];
@@ -48,6 +60,22 @@ class StudentDTO implements JsonSerializable {
 
     public function getEmail(): string {
         return $this->email;
+    }
+
+    public function getPhone(): string {
+        return $this->phone;
+    }
+
+    public function getAddress(): string {
+        return $this->address;
+    }
+
+    public function getBirthDate(): string {
+        return $this->birthdate;
+    }
+
+    public function getGender(): string {
+        return $this->gender;
     }
 
     public function getStudentNumber(): string {

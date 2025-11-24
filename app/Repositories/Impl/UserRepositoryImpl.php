@@ -41,7 +41,9 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
 
 
     public function findByEmail(string $email): ?UserModel {
-        $query = UserModel::join('roles', 'users.role_id', '=', 'roles.id')
+
+        // dd($email);
+        $query = UserModel::leftJoin('roles', 'users.role_id', '=', 'roles.id')
                     ->select(
                         'users.id',
                         'users.name',

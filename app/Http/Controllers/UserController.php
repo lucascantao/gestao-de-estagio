@@ -44,15 +44,15 @@ class UserController
         );
     }
 
-//    public function logout(Request $request): JsonResponse
-//    {
-//        try {
-//            $this->userService->logout($request->userId);
-//            return response()->json(['message' => 'Logout realizado com sucesso'], 200);
-//        } catch (BadRequestException $e) {
-//            return response()->json(['message' => $e->getMessage()], 404);
-//        }
-//    }
+   public function logout(Request $request): JsonResponse
+   {
+       try {
+           $this->userService->logout($request->userId);
+           return response()->json(['message' => 'Logout realizado com sucesso'], 200);
+       } catch (BadRequestException $e) {
+           return response()->json(['message' => $e->getMessage()], 404);
+       }
+   }
 
 //     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
 //     {

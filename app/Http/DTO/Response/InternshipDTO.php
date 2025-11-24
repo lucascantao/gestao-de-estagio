@@ -39,6 +39,10 @@ class InternshipDTO implements JsonSerializable {
             $internship->student_id,
             $internship->student_name,
             $internship->student_email,
+            $internship->student_phone,
+            $internship->student_address,
+            $internship->student_birthdate,
+            $internship->student_gender,
             $internship->student_number,
             $course
         );
@@ -76,6 +80,10 @@ class InternshipDTO implements JsonSerializable {
             $internship->course_name
         );
         $user = new StudentDTO(
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null,
@@ -132,8 +140,8 @@ class InternshipDTO implements JsonSerializable {
             'schedule' => $this->schedule,
             'salary' => $this->salary,
             'company' => $this->company->toArray(),
-            'internship_status' => $this->status->toArray(),
-            'student_number' => $this->user->getStudentNumber(),
+            'internshipStatus' => $this->status->toArray(),
+            'studentNumber' => $this->user->getStudentNumber(),
         ];
     }
 

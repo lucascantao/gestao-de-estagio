@@ -39,30 +39,31 @@ class UserService {
 
     public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
         // se for cadastro de Supervisor, anular o id e deixar em espera
-        if ($dto->getRoleId() == 1) {
-            $dto->setRoleId(null);
-        }
+        // if ($dto->getRoleId() == 1) {
+        //     $dto->setRoleId(null);
+        // }
+        $dto->setRoleId(2); // aluno padrão por enquanto
         $user = $this->userRepository->store($dto->toInsertArray());
         $userModel = $this->userRepository->findUserById($user->getAttribute('id'));
         $token = $user->createToken($user->getAttribute('name') . '_auth_token')->plainTextToken;
         return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token);
     }
 
-//    public function logout(int $userId): array
-//    {
-//        $user = $this->userRepository->findById($userId);
+   public function logout(int $userId): array
+   {
+       $user = $this->userRepository->findById($userId);
 
-//        if (!$user) {
-//            throw new BadRequestException('Usuário não encontrado');
-//        }
+       if (!$user) {
+           throw new BadRequestException('Usuário não encontrado');
+       }
 
-//        try {
-//            $user->tokens()->delete();
-//            return ['message' => 'Logout realizado com sucesso'];
-//        } catch (\Exception $e) {
-//            throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
-//        }
-//    }
+       try {
+           $user->tokens()->delete();
+           return ['message' => 'Logout realizado com sucesso'];
+       } catch (\Exception $e) {
+           throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
+       }
+   }
 
 //     public function forgotPassword(string $email): void
 //     {

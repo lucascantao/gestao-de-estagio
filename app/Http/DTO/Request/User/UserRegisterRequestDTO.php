@@ -12,10 +12,10 @@ class UserRegisterRequestDTO {
         protected string $password,
         protected ?int $roleId,
         protected ?int $courseId,
-        // string $address,
-        // string $phoneNumber,
-        // ?string $birthdate = null,
-        // ?string $gender = null
+        protected ?string $phone,
+        protected ?string $address,
+        protected ?string $birthdate,
+        protected ?string $gender
     ) { }
 
     public static function fromArray(array $data): self
@@ -26,10 +26,10 @@ class UserRegisterRequestDTO {
             $data['password'],
             $data['roleId'] ?? null,
             $data['courseId'] ?? null,
-            // $data['address'],
-            // $data['phone'],
-            // $data['birthdate'] ?? null,
-            // $data['gender'] ?? null
+            $data['phone'] ?? null,
+            $data['address'] ?? null,
+            $data['birthdate'] ?? null,
+            $data['gender'] ?? null
         );
     }
 
@@ -40,9 +40,10 @@ class UserRegisterRequestDTO {
             'password' => Hash::make($this->password),
             'role_id' => $this->roleId,
             'course_id' => $this->courseId,
-            // 'address' => $this->address,
-            // 'phone_number' => $this->phoneNumber,
-            // 'birthdate' => $this->birthdate,
+            'address' => $this->address,
+            'phone' => $this->phone,
+            'birthdate' => $this->birthdate,
+            'gender'=> $this->gender
         ];
     }
 
@@ -63,6 +64,19 @@ class UserRegisterRequestDTO {
     }
     public function setRoleId(?int $roleId) {
         $this->roleId = $roleId;
+    }
+
+    public function getAddress(): ?string {
+        return $this->address;
+    }
+    public function getPhone(): ?string {
+        return $this->phone;
+    }
+    public function getBirthdate(): ?string {
+        return $this->birthdate;
+    }
+    public function getGender(): ?string {
+        return $this->gender;
     }
 
 }

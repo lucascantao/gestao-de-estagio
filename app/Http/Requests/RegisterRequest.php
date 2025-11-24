@@ -14,16 +14,16 @@ class RegisterRequest extends FormRequest {
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'roleId' => 'nullable',
+            // 'roleId' => 'nullable',
             'courseId' => 'nullable',
-            // 'address' => 'nullable|string',
-            // 'phone' => [
-            //     'required',
-            //     'string',
-            //     'regex:/^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/'
-            // ],
-            // 'birthdate' => 'nullable|date',
-            // 'gender' => 'nullable|string|in:masculino,feminino,outro',
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/'
+            ],
+            'address' => 'nullable|string',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|string|in:masculino,feminino,outro',
         ];
     }
 
@@ -40,13 +40,13 @@ class RegisterRequest extends FormRequest {
             'password.min' => 'O campo Senha deve ter no mínimo 8 caracteres.',
             // 'roleId.required' => 'O perfil é obrigatório',
             // 'roleId.exists' => 'O perfil selecionado não existe',
-            // 'phone.regex' => 'O campo telefone deve ser um telefone válido',
-            // 'phone.required' => 'O campo telefone é obrigatório',
-            // 'phone.string' => 'O campo telefone deve ser uma string',
-            // 'address.string' => 'O campo endereço deve ser uma string',
-            // 'birthdate.date' => 'O campo data de nascimento deve ser uma data válida.',
-            // 'gender.string' => 'O campo gênero deve ser uma string.',
-            // 'gender.in' => 'O campo gênero deve ser masculino, feminino ou outro.',
+            'phone.regex' => 'O campo telefone deve ser um telefone válido',
+            'phone.required' => 'O campo telefone é obrigatório',
+            'phone.string' => 'O campo telefone deve ser uma string',
+            'address.string' => 'O campo endereço deve ser uma string',
+            'birthdate.date' => 'O campo data de nascimento deve ser uma data válida.',
+            'gender.string' => 'O campo gênero deve ser uma string.',
+            'gender.in' => 'O campo gênero deve ser masculino, feminino ou outro.',
         ];
     }
 }
