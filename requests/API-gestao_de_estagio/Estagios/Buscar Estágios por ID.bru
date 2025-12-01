@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: http://localhost:8000/api/internship?page=1&perPage=15
+  url: http://localhost:8000/api/internship/1
   body: none
   auth: inherit
 }
 
 params:query {
-  page: 1
-  perPage: 15
+  ~page: 1
+  ~perPage: 15
 }
 
 settings {

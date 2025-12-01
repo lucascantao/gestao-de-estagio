@@ -1,0 +1,27 @@
+meta {
+  name: Criar Vaga
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/vacance
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "vaga teste",
+    "description": "descrição",
+    "number_of_positions": 2,
+    "requirements": "teste",
+    "salary": "2050.65",
+    "application_deadline": "2026-01-01"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
