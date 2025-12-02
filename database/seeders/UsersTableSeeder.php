@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +18,30 @@ class UsersTableSeeder extends Seeder
                 'email'=> 'cantao162@gmail.com',
                 'password'=> bcrypt('12345678'),
                 'role_id' => 1,
+            ],
+            [
+                'name' => 'John Doe',
+                'email'=> 'johndoe@gmail.com',
+                'password'=> bcrypt('12345678'),
+                'role_id' => 2,
+            ],
+            [
+                'name' => 'Jane Doe',
+                'email'=> 'janedoe@gmail.com',
+                'password'=> bcrypt('12345678'),
+                'role_id' => 2,
+            ],
+            [
+                'name' => 'Fulano de Tal',
+                'email'=> 'fulano@gmail.com',
+                'password'=> bcrypt('12345678'),
+                'role_id' => 2,
+            ],
+            [
+                'name' => 'Ciclano de Tal',
+                'email'=> 'ciclano@gmail.com',
+                'password'=> bcrypt('12345678'),
+                'role_id' => 2,
             ],
         ]);
     }
