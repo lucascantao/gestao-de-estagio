@@ -28,6 +28,11 @@ class VacanceRepositoryImpl extends BaseRepositoryImpl implements VacanceReposit
         $query = $this->model::select(
             'vacancies.*',
         )
+        ->where( function($q) {
+            $q->whereNull('vacancies.deleted_at');
+            $q->where('vacancies.active', true);
+            $q->where('vacancies.application_deadline', '>=', date('Y-m-d'));
+        })
         ->orderBy('vacancies.id', 'desc');
 
         return $query->paginate($perPage, ['*'], 'page', $page);
