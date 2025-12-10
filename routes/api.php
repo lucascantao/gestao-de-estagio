@@ -44,5 +44,6 @@ Route::controller(VacanceController::class)->group(function () {
         Route::get('/{id}', 'getVacanceById');
         Route::post('/', 'storeVacance');
         Route::put('/{id}', 'updateVacance');
-    }); 
+        Route::delete('/{id}', 'deleteVacance');
+    });
 });

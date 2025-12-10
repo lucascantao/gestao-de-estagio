@@ -17,6 +17,7 @@ class VacanceModel extends Model
         'requirements',
         'salary',
         'application_deadline',
-        'active'
+        'active',
+        'deleted_at'
     ];
 }

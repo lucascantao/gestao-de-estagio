@@ -76,4 +76,24 @@ class VacanceService {
 
         return $response;
     }
+
+    public function deleteVacance(int $id): array {
+        $response = [];
+        try {
+            $vacance = $this->vacanceRepository->getVacanceById($id);
+            if(!$vacance || $vacance->deleted_at !== null) {
+                $response['status'] = 'not_found';
+                $response['data'] = ['message' => 'Vaga nao encontrada.'];
+                return $response;
+            }
+            $this->vacanceRepository->update($id, ['deleted_at' => now()]);
+            $response['status'] = 'success';
+            $response['data'] = ['message' => 'Vaga deletada com sucesso.'];
+        } catch (\Exception $e) {
+            $response['status'] = 'error';
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+        }
+
+        return $response;
+    }
 }

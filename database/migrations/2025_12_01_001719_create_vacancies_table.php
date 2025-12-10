@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('salary', 20)->nullable();
             $table->date('application_deadline');
             $table->boolean('active')->default(true);
+            $table->timestamp('deleted_at')->nullable();
+
 
             $table->timestamps();
         });

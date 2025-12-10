@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\DTO\Request\StoreInternshipRequestDTO;
 use App\Http\DTO\Request\StoreVacanceRequestDTO;
-use App\Http\DTO\Request\UpdateInternshipRequestDTO;
 use App\Http\DTO\Request\UpdateVacanceRequestDTO;
 use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\CreateVacanceRequest;
@@ -58,5 +56,10 @@ class VacanceController
                 )
             )
         );
+    }
+
+    public function deleteVacance(int $id) {
+        return response()
+        ->json(APIResponseDTO::fromData($this->vacanceService->deleteVacance($id)));
     }
 }
