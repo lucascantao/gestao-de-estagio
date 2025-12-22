@@ -21,10 +21,10 @@ class StoreVacanceRequestDTO implements JsonSerializable {
         return new self(
             $request['title'],
             $request['description'],
-            $request['number_of_positions'],
+            $request['numberOfPositions'],
             $request['requirements'] ?? null,
             $request['salary'] ?? null,
-            $request['application_deadline']
+            $request['applicationDeadline']
         );
     }
 

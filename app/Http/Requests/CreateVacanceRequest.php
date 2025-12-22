@@ -24,10 +24,10 @@ class CreateVacanceRequest extends FormRequest
         return [
             'title' => 'required|string|max:100',
             'description' => 'required|string',
-            'number_of_positions' => 'required|integer|min:1',
+            'numberOfPositions' => 'required|integer|min:1',
             'requirements' => 'nullable|string|max:255',
             'salary' => 'nullable|max:20',
-            'application_deadline' => 'required|date',
+            'applicationDeadline' => 'required|date',
         ];
     }
 }

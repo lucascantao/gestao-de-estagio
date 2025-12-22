@@ -22,10 +22,10 @@ class UpdateVacanceRequestDTO implements JsonSerializable {
         return new self(
             $request['title'] ?? null,
             $request['description'] ?? null,
-            $request['number_of_positions'] ?? null,
+            $request['numberOfPositions'] ?? null,
             $request['requirements'] ?? null,
             $request['salary'] ?? null,
-            $request['application_deadline'] ?? null,
+            $request['applicationDeadline'] ?? null,
             $request['active'] ?? null,
         );
     }

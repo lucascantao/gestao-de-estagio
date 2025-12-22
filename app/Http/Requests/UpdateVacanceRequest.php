@@ -24,10 +24,10 @@ class UpdateVacanceRequest extends FormRequest
         return [
             'title' => 'nullable|string|max:100',
             'description' => 'nullable|string',
-            'number_of_positions' => 'nullable|integer|min:1',
+            'numberOfPositions' => 'nullable|integer|min:1',
             'requirements' => 'nullable|string|max:255',
             'salary' => 'nullable|numeric',
-            'application_deadline' => 'nullable|date',
+            'applicationDeadline' => 'nullable|date',
         ];
     }
 }
