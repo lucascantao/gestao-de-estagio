@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             EnrollmentsTableSeeder::class,
             CompanyTableSeeder::class,
-            InternshipsTableSeeder::class
+            InternshipsTableSeeder::class,
+            SkillsTableSeeder::class
         ]);
     }
 }

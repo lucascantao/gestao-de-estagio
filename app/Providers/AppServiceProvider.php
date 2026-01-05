@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Repositories\Interface\CompanyRepository;
 use App\Repositories\Interface\InternshipRepository;
+use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\Repositories\Interface\VacanceRepository;
 use App\Services\FileStorageService;
 use App\Services\InternshipService;
+use App\Services\SkillService;
 use App\Services\UserService;
 use App\Services\VacanceService;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +41,12 @@ class AppServiceProvider extends ServiceProvider
             return new UserService(
                 $this->app->make(UserRepository::class),
                 $this->app->make(InternshipRepository::class)
+            );
+        });
+
+        $this->app->singleton(SkillService::class, function ($app) {
+            return new SkillService(
+                $this->app->make(SkillRepository::class)
             );
         });
     }

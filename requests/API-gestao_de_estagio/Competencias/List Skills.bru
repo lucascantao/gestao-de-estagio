@@ -1,0 +1,21 @@
+meta {
+  name: List Skills
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/skill/list?page=1&perPage=15
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  perPage: 15
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

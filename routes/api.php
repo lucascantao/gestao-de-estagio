@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InternshipController;
+use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacanceController;
 use Illuminate\Http\Request;
@@ -37,7 +38,6 @@ Route::controller(InternshipController::class)->group(function () {
     });
 });
 
-
 Route::controller(VacanceController::class)->group(function () {
     Route::prefix('vacance')->group(function () {
         Route::post('/list', 'getAllVacancies');
@@ -47,3 +47,16 @@ Route::controller(VacanceController::class)->group(function () {
         Route::delete('/{id}', 'deleteVacance');
     });
 });
+
+Route::controller(SkillController::class)->group(function () {
+    Route::prefix('skill')->group(function () {
+        Route::get('/', 'getSkills');
+        Route::post('/list', 'getAllSkills');
+        // Route::get('/{id}', 'getVacanceById');
+        // Route::post('/', 'storeVacance');
+        // Route::put('/{id}', 'updateVacance');
+        // Route::delete('/{id}', 'deleteVacance');
+    });
+});
+
+
