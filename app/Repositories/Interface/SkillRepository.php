@@ -10,5 +10,7 @@ interface SkillRepository extends BaseRepository {
 
     public function getSkills();
 
-    // public function getSkillById(int $id);
+    public function getSkillByUserId(int $userId);
+
+    public function assignSkillsToUser(array $skillIds, int $userId): void;
 }

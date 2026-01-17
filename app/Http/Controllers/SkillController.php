@@ -54,6 +54,12 @@ class SkillController
         ));
     }
 
+    public function updateUserSkills(Request $request, int $userId) {
+        return response()->json(APIResponseDTO::fromData(
+            $this->skillService->assignSkillsToUser($request->input('skillIds'), $userId)
+        ));
+    }
+
     // public function storeVacance(CreateVacanceRequest $request) {
     //     return response()
     //     ->json(APIResponseDTO::fromData(

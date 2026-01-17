@@ -44,6 +44,23 @@ class SkillService {
         return PageResponseDTO::fromPaginator($paginator, $skills);
     }
 
+    public function assignSkillsToUser(array $skillIds, int $userId): array {
+        $response = [];
+        $response['metadata'] = null;
+        $response['exception'] = null;
+        try {
+            $this->skillRepository->assignSkillsToUser($skillIds, $userId);
+            $response['status'] = 'success';
+            $response['data'] = ['message' => 'Skills atualizadas com sucesso.'];
+            return $response;   
+        } catch (Exception $e) {
+            $response['status'] = 'error';
+            $response['data'] = null;
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+            return $response;
+        }
+    }
+
     // public function storeVacance(StoreVacanceRequestDTO $vacance): array {
     //     $response = [];
     //     try {

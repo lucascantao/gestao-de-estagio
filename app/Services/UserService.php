@@ -11,6 +11,7 @@ use App\Http\DTO\Request\User\UserRegisterRequestDTO;
 use App\Http\DTO\Request\User\VerifyTokenRequestDTO;
 use App\Http\DTO\Response\User\UserAuthResponseDTO;
 use App\Repositories\Interface\InternshipRepository;
+use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\utils\traits\ExceptionTrait;
 use Illuminate\Support\Facades\Cache;
@@ -25,6 +26,7 @@ class UserService {
     public function __construct(
         protected UserRepository $userRepository,
         protected InternshipRepository $internshipRepository,
+        protected SkillRepository $skillRepository,
     ) {}
 
     public function login(UserLoginRequestDTO $dto): UserAuthResponseDTO {
@@ -144,15 +146,15 @@ class UserService {
 
         public function getUserDetails(int $userId) { 
             $user = UserDTO::fromUser($this->userRepository->findUserById($userId));
-
             $internship = $this->internshipRepository->getInternshipByUserId($userId);
+            $skills = $this->skillRepository->getSkillByUserId($userId);
             $dto = $internship 
                 ? InternshipDTO::fromUser($internship)->toStudentDetailsArray() 
                 : null;
-            // dd($internship);
             return  [
                 ...$user->toArray(),
                 'internship' => $dto,
+                'skills' => $skills,
             ];
         }
 }
