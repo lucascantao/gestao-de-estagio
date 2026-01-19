@@ -28,6 +28,17 @@ class CompanyDTO implements JsonSerializable {
         );
     }
 
+    public static function fromCompany(object $company): self {
+        return new self(
+            $company->id,
+            $company->name,
+            $company->cnpj ?? null,
+            $company->address ?? null,
+            $company->email ?? null,
+            $company->phone ?? null
+        );
+    }
+
     public function toArray(): array
     {
         return [

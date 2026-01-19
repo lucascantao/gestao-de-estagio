@@ -22,4 +22,11 @@ class CompanyRepositoryImpl extends BaseRepositoryImpl implements CompanyReposit
 
         return $query->paginate($perPage, ['*'], 'page', $page);
     }
+
+    public function getCompanies() {
+        $query = $this->model::select('*')
+        ->orderBy('companies.name');
+
+        return $query->get();
+    }
 }

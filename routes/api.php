@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
@@ -53,10 +54,12 @@ Route::controller(SkillController::class)->group(function () {
         Route::get('/', 'getSkills');
         Route::post('/list', 'getAllSkills');
         Route::put('/user/{userId}', 'updateUserSkills');
-        // Route::get('/{id}', 'getVacanceById');
-        // Route::post('/', 'storeVacance');
-        // Route::put('/{id}', 'updateVacance');
-        // Route::delete('/{id}', 'deleteVacance');
+    });
+});
+
+Route::controller(CompanyController::class)->group(function () {
+    Route::prefix('company')->group(function () {
+        Route::get('/', 'getCompanies');
     });
 });
 

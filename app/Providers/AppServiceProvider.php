@@ -7,6 +7,7 @@ use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\Repositories\Interface\VacanceRepository;
+use App\Services\CompanyService;
 use App\Services\FileStorageService;
 use App\Services\InternshipService;
 use App\Services\SkillService;
@@ -48,6 +49,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SkillService::class, function ($app) {
             return new SkillService(
                 $this->app->make(SkillRepository::class)
+            );
+        });
+
+        $this->app->singleton(CompanyService::class, function ($app) {
+            return new CompanyService(
+                $this->app->make(CompanyRepository::class)
             );
         });
     }
