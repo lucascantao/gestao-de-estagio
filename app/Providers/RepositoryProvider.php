@@ -3,16 +3,19 @@
 namespace App\Providers;
 
 use App\Models\CompanyModel;
+use App\Models\CourseModel;
 use App\Models\InternshipModel;
 use App\Models\SkillModel;
 use App\Models\UserModel;
 use App\Models\VacanceModel;
 use App\Repositories\Impl\CompanyRepositoryImpl;
+use App\Repositories\Impl\CourseRepositoryImpl;
 use App\Repositories\Impl\InternshipRepositoryImpl;
 use App\Repositories\Impl\SkillRepositoryImpl;
 use App\Repositories\Impl\UserRepositoryImpl;
 use App\Repositories\Impl\VacanceRepositoryImpl;
 use App\Repositories\Interface\CompanyRepository;
+use App\Repositories\Interface\CourseRepository;
 use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
@@ -44,6 +47,10 @@ class RepositoryProvider extends ServiceProvider
 
         $this->app->singleton(SkillRepository::class, function ($app) {
             return new SkillRepositoryImpl($this->app->make(SkillModel::class));
+        });
+
+        $this->app->singleton(CourseRepository::class, function ($app) {
+            return new CourseRepositoryImpl($this->app->make(CourseModel::class));
         });
     }
 

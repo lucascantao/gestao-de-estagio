@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
@@ -60,6 +61,12 @@ Route::controller(SkillController::class)->group(function () {
 Route::controller(CompanyController::class)->group(function () {
     Route::prefix('company')->group(function () {
         Route::get('/', 'getCompanies');
+    });
+});
+
+Route::controller(CourseController::class)->group(function () {
+    Route::prefix('course')->group(function () {
+        Route::get('/', 'getCourses');
     });
 });
 

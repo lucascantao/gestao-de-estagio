@@ -24,10 +24,15 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
         try {
             $query = $this->model::query()->select([
                 'users.*',
+                'user_enrollments.student_number',
                 'roles.name as role_name',
                 'roles.id as role_id',
+                'courses.id as course_id',
+                'courses.name as course_name'
             ])
                 ->leftJoin( 'roles', 'users.role_id', '=', 'roles.id')
+                ->leftJoin('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+                ->leftJoin('courses', 'user_enrollments.course_id', '=', 'courses.id')
                 ->where($this->model->getTable() . ".id", "=", $id);
             return $query->firstOrFail();
         }

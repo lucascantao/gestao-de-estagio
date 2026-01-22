@@ -9,6 +9,7 @@ use stdClass;
 
 class UserDTO implements JsonSerializable {
     private ?UserRoleDTO $role;
+    private ?UserCourseDTO $course;
 
     public function __construct(
         private ?int $id,
@@ -18,8 +19,11 @@ class UserDTO implements JsonSerializable {
         private ?string $address,
         private ?string $birthdate,
         private ?string $gender,
+        private ?string $student_number,
         ?int $roleId,
         ?string $roleName,
+        ?int $courseId,
+        ?string $courseName
     )
     {
         $this->id = $id;
@@ -29,7 +33,9 @@ class UserDTO implements JsonSerializable {
         $this->address = $address;
         $this->birthdate = $birthdate;
         $this->gender = $gender;
+        $this->student_number = $student_number;
         $this->role = ($roleId != null || $roleName != null) ? new UserRoleDTO($roleId, $roleName) : null;
+        $this->course = ($courseId != null || $courseName != null) ? new UserCourseDTO($courseId, $courseName) : null;
     }
 
     public static function fromUser(UserModel $user): self {
@@ -41,8 +47,11 @@ class UserDTO implements JsonSerializable {
             $user->getAttribute('address'),
             $user->getAttribute('birthdate'),
             $user->getAttribute('gender'),
+            $user->getAttribute('student_number'),
             $user->getAttribute('role_id'),
             $user->getAttribute('role_name'),
+            $user->getAttribute('course_id'),
+            $user->getAttribute('course_name'),
         );
     }
 
@@ -55,8 +64,11 @@ class UserDTO implements JsonSerializable {
             $user->address ?? null,
             $user->birthdate ?? null,
             $user->gender ?? null,
+            $user->student_number ?? null,
             $user->role_id ?? null,
             $user->role_name ?? null,
+            $user->course_id ?? null,
+            $user->course_name ?? null
         );
     }
 
@@ -70,7 +82,9 @@ class UserDTO implements JsonSerializable {
             'address'=> $this->address,
             'birthdate'=> $this->birthdate,
             'gender'=> $this->gender,
+            'student_number'=> $this->student_number,
             'role' => $this->role ? $this->role->toArray() : null,
+            'course' => $this->course ? $this->course->toArray() : null
         ];
     }
 

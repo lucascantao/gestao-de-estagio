@@ -2,7 +2,6 @@
 
 namespace App\Http\DTO\Response;
 
-
 use JsonSerializable;
 
 class CourseDTO implements JsonSerializable {
@@ -12,6 +11,13 @@ class CourseDTO implements JsonSerializable {
         protected string $name
     )
     { }
+
+    public static function fromCourse(object $course): self {
+        return new self(
+            $course->getAttribute('id'),
+            $course->getAttribute('name')
+        );
+    }
 
     public static function fromUser(object $user): self {
         return new self(
