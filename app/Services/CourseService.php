@@ -8,6 +8,7 @@ use App\Http\DTO\Response\PageResponseDTO;
 use App\Repositories\Interface\CompanyRepository;
 use App\Repositories\Interface\CourseRepository;
 use App\utils\traits\ExceptionTrait;
+use Exception;
 
 class CourseService {
 
@@ -34,20 +35,31 @@ class CourseService {
         return PageResponseDTO::fromPaginator($paginator, $courses);
     }
 
-    // public function assignSkillsToUser(array $skillIds, int $userId): array {
-    //     $response = [];
-    //     $response['metadata'] = null;
-    //     $response['exception'] = null;
-    //     try {
-    //         $this->skillRepository->assignSkillsToUser($skillIds, $userId);
-    //         $response['status'] = 'success';
-    //         $response['data'] = ['message' => 'Skills atualizadas com sucesso.'];
-    //         return $response;   
-    //     } catch (Exception $e) {
-    //         $response['status'] = 'error';
-    //         $response['data'] = null;
-    //         $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
-    //         return $response;
-    //     }
-    // }
+    public function assignCourseToUser(array $course, int $userId): array {
+        $response = [];
+        $response['metadata'] = null;
+        $response['exception'] = null;
+        // dd('teste');
+        try {
+
+            // dd($course);
+            $courseObj = [
+                'course_id' => $course['courseId'],
+                'user_id' => $userId,
+                'student_number' => $course['studentNumber']
+            ];
+
+            // dd($courseObj);
+            
+            $this->courseRepository->assignCourseToUser($courseObj, $userId);
+            $response['status'] = 'success';
+            $response['data'] = ['message' => 'Curso atualizado com sucesso.'];
+            return $response;
+        } catch (Exception $e) {
+            $response['status'] = 'error';
+            $response['data'] = null;
+            $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
+            return $response;
+        }
+    }
 }

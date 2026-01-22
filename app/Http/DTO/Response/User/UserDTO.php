@@ -19,7 +19,7 @@ class UserDTO implements JsonSerializable {
         private ?string $address,
         private ?string $birthdate,
         private ?string $gender,
-        private ?string $student_number,
+        private ?string $studentNumber,
         ?int $roleId,
         ?string $roleName,
         ?int $courseId,
@@ -33,7 +33,7 @@ class UserDTO implements JsonSerializable {
         $this->address = $address;
         $this->birthdate = $birthdate;
         $this->gender = $gender;
-        $this->student_number = $student_number;
+        $this->studentNumber = $studentNumber;
         $this->role = ($roleId != null || $roleName != null) ? new UserRoleDTO($roleId, $roleName) : null;
         $this->course = ($courseId != null || $courseName != null) ? new UserCourseDTO($courseId, $courseName) : null;
     }
@@ -82,7 +82,7 @@ class UserDTO implements JsonSerializable {
             'address'=> $this->address,
             'birthdate'=> $this->birthdate,
             'gender'=> $this->gender,
-            'student_number'=> $this->student_number,
+            'studentNumber'=> $this->studentNumber,
             'role' => $this->role ? $this->role->toArray() : null,
             'course' => $this->course ? $this->course->toArray() : null
         ];

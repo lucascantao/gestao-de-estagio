@@ -9,4 +9,6 @@ interface CourseRepository extends BaseRepository {
     public function getAllCourses(int $page, int $perPage): LengthAwarePaginator;
 
     public function getCourses();
+
+    public function assignCourseToUser(array $course, int $userId);
 }

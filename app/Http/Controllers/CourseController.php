@@ -6,6 +6,7 @@ use App\Http\DTO\Response\APIResponseDTO;
 use App\Http\Requests\PageableRequest;
 use App\Services\CompanyService;
 use App\Services\CourseService;
+use Illuminate\Http\Request;
 
 class CourseController
 {
@@ -40,5 +41,12 @@ class CourseController
                 'exception' => null
             ]
         ));
+    }
+
+    public function updateUserCourse(Request $request, $userId) {
+        $courseObject = $request->all();
+        // dd('teste');
+        $this->courseService->assignCourseToUser($courseObject, $userId);
+        return response()->json(['message' => 'Curso atualizado com sucesso'], 200);
     }
 }

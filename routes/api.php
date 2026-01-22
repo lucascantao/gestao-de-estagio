@@ -67,6 +67,7 @@ Route::controller(CompanyController::class)->group(function () {
 Route::controller(CourseController::class)->group(function () {
     Route::prefix('course')->group(function () {
         Route::get('/', 'getCourses');
+        Route::put('user/{userId}', 'updateUserCourse');
     });
 });
 

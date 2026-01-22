@@ -1,0 +1,23 @@
+meta {
+  name: Update User Course
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/course/user/6
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "courseId": 1,
+    "studentNumber": "201804940008"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
