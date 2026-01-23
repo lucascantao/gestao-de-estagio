@@ -18,7 +18,8 @@ class InternshipDTO implements JsonSerializable {
         protected ?string $supervisor,
         protected CompanyDTO $company,
         protected InternshipStatusDTO $status,
-        protected StudentDTO $user
+        protected StudentDTO $user,
+        protected ?bool $hasDocument
     )
     { }
 
@@ -66,7 +67,8 @@ class InternshipDTO implements JsonSerializable {
             $internship->supervisor,
             $company,
             $status,
-            $user
+            $user,
+            $internship->has_document
         );
     }
 
@@ -110,7 +112,8 @@ class InternshipDTO implements JsonSerializable {
             null,
             $company,
             $status,
-            $user
+            $user,
+            $internship->has_document
         );
     }
 
@@ -129,7 +132,8 @@ class InternshipDTO implements JsonSerializable {
             'supervisor' => $this->supervisor,
             'company' => $this->company->toArray(),
             'internship_status_id' => $this->status->toArray(),
-            'user' => $this->user->toArray()
+            'user' => $this->user->toArray(),
+            'has_document' => $this->hasDocument
         ];
     }
 
@@ -142,6 +146,7 @@ class InternshipDTO implements JsonSerializable {
             'company' => $this->company->toArray(),
             'internshipStatus' => $this->status->toArray(),
             'studentNumber' => $this->user->getStudentNumber(),
+            'hasDocument' => $this->hasDocument
         ];
     }
 
@@ -187,6 +192,10 @@ class InternshipDTO implements JsonSerializable {
 
     public function getUser(): StudentDTO {
         return $this->user;
+    }
+
+    public function getHasDocument(): bool {
+        return $this->hasDocument;
     }
 
     public function jsonSerialize(): mixed {
