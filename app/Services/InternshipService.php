@@ -7,10 +7,12 @@ use App\Http\DTO\Request\UpdateInternshipRequestDTO;
 use App\Http\DTO\Response\InternshipDTO;
 use App\Http\DTO\Response\PageResponseDTO;
 use App\Repositories\Interface\CompanyRepository;
+use App\Repositories\Interface\DocumentRepository;
 use App\Repositories\Interface\InternshipRepository;
 use App\utils\traits\ExceptionTrait;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class InternshipService {
 
@@ -19,7 +21,8 @@ class InternshipService {
     public function __construct(
         protected InternshipRepository $intershipRepository,
         protected CompanyRepository $companyRepository,
-        protected FileStorageService $fileStorageService
+        protected FileStorageService $fileStorageService,
+        protected DocumentRepository $documentRepository
     ) {
     }
 
@@ -95,27 +98,33 @@ class InternshipService {
     public function submitInternshipDocs(int $internshipId, object $document): array {
         $response = [];
         try {
-                    
+            $internshipDoc = $this->documentRepository->getDocumentByInternshipId($internshipId);
+
             $timestamp = now()->format('Y-m-d_H-i-s');
             $extension = $document->getClientOriginalExtension();
             $filename = "{$internshipId}_{$timestamp}.{$extension}";
             $subfolder = "internships/{$internshipId}/documents/";
             $fileContent = file_get_contents($document->getRealPath());
-            
-            $this->fileStorageService->storeFile($filename, $fileContent, $subfolder);
-            
             $userId = $this->intershipRepository->getUserIdByInternshipId($internshipId);
 
-            $this->intershipRepository->insertDocument([
+            if($internshipDoc) {
+                $this->fileStorageService->deleteFile($internshipDoc->filename, $subfolder);
+            }
+                
+            $this->fileStorageService->storeFile($filename, $fileContent, $subfolder);
+
+            $this->documentRepository->insertDocument([
                 'path' => $subfolder . $filename,
                 'filename' => $filename,
                 'internship_id' => $internshipId,
                 'user_id' => $userId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            ],
+            $internshipId);
 
-            $response['data'] = ['message' => 'Documentação do Estágio enviada com sucesso.'];
+            $update = $this->updateInternshipStatus($internshipId, 3);
+            Log::info('updating', $update);
+            
+            $response['data'] = ['message' => 'Documentação do Estágio atualizada com sucesso.'];
             $response['status'] = 'success';
         } catch (Exception $e) {
             $response['status'] = 'error';

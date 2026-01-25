@@ -116,8 +116,4 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
 
         return $internship ? $internship->user_id : null;
     }
-
-    public function insertDocument(array $data): void {
-        DB::table('documents')->insert($data);
-    }
 }

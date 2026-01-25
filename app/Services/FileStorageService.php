@@ -21,4 +21,9 @@ class FileStorageService {
 		$fullname = $subfolder.'/'.$filename;
 		return Storage::disk(self::STORAGE_NAME)->put($fullname, $fileContent);
 	}
+
+	public function deleteFile($filename, $subfolder): void {
+        $path = Storage::disk(self::STORAGE_NAME)->path($subfolder.$filename);
+        File::delete($path);
+    }
 }

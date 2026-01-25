@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\Interface\CompanyRepository;
 use App\Repositories\Interface\CourseRepository;
+use App\Repositories\Interface\DocumentRepository;
 use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
@@ -28,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
             return new InternshipService(
                 $this->app->make(InternshipRepository::class),
                 $this->app->make(CompanyRepository::class),
-                $this->app->make(FileStorageService::class)
+                $this->app->make(FileStorageService::class),
+                $this->app->make(DocumentRepository::class)
             );
         });
 

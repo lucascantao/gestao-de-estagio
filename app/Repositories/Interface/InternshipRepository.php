@@ -13,6 +13,4 @@ interface InternshipRepository extends BaseRepository {
     public function getInternshipByUserId(int $userId);
 
     public function getUserIdByInternshipId(int $internshipId): ?int;
-
-    public function insertDocument(array $data): void;
 }
