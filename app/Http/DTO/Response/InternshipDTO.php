@@ -50,10 +50,10 @@ class InternshipDTO implements JsonSerializable {
         $company = new CompanyDTO(
             $internship->company_id,
             $internship->company_name,
-            null,
-            null,
-            null,
-            null
+            $internship->company_cnpj,
+            $internship->company_address,
+            $internship->company_email,
+            $internship->company_phone
         );
 
         return new self(
@@ -125,15 +125,15 @@ class InternshipDTO implements JsonSerializable {
             'id' => $this->id,
             'workload' => $this->workload,
             'schedule' => $this->schedule,
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'startDate' => $this->startDate,
+            'endDate' => $this->endDate,
             'salary' => $this->salary,
             'observation' => $this->observation,
             'supervisor' => $this->supervisor,
             'company' => $this->company->toArray(),
-            'internship_status_id' => $this->status->toArray(),
+            'internshipStatus' => $this->status->toArray(),
             'user' => $this->user->toArray(),
-            'has_document' => $this->hasDocument
+            'hasDocument' => $this->hasDocument
         ];
     }
 
