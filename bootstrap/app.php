@@ -1,8 +1,16 @@
 <?php
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\RateLimiter;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,8 +20,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->api([
+            EncryptCookies::class,
+            StartSession::class,
+            AddQueuedCookiesToResponse::class,
+            EnsureFrontendRequestsAreStateful::class,
+            'throttle:api',
+            SubstituteBindings::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->booted(function () {
+        RateLimiter::for('api', function (Request $request) {
+            // Limite de 500 requisições por minuto por usuário ou IP
+            return Limit::perMinute(500)->by($request->user()?->id ?: $request->ip());
+        });
+    })
+    ->create();

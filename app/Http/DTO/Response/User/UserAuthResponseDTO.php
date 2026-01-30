@@ -12,15 +12,15 @@ class UserAuthResponseDTO implements JsonSerializable {
 
     public function __construct(
         string    $message,
-        UserModel $user,
+        ?UserModel $user,
         ?string   $token
     ) {
         $this->message = $message;
-        $this->user = UserDTO::fromUser($user);
+        $this->user = $user ? UserDTO::fromUser($user) : null;
         $this->token = $token ?? null;
     }
 
-    public static function fromAuthSuccess(string $message, UserModel $user, ?string $token): self
+    public static function fromAuthSuccess(string $message, ?UserModel $user, ?string $token): self
     {
         return new self(
             $message,
@@ -33,7 +33,7 @@ class UserAuthResponseDTO implements JsonSerializable {
     {
         return [
             'message' => $this->message,
-            'user' => $this->user->toArray(),
+            'user' =>  $this->user ? $this->user->toArray() : null,
             'token' => $this->token ?? null
         ];
     }

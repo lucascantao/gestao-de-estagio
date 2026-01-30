@@ -14,9 +14,12 @@ use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\utils\traits\ExceptionTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserService {
@@ -35,8 +38,15 @@ class UserService {
         if (!$user || !Hash::check($dto->getPassword(), $user->password)) {
             throw new BadRequestException('Credenciais inválidas');
         }
-        $token = $user->createToken('auth_token')->plainTextToken;
-        return UserAuthResponseDTO::fromAuthSuccess('Login realizado com sucesso', $user, $token);
+
+        if(Auth::attempt(['email' => $dto->getEmail(), 'password' => $dto->getPassword()])) {
+            $dto->getSession()->regenerate();
+            return UserAuthResponseDTO::fromAuthSuccess('Login realizado com sucesso', $user, null);
+        } else {
+            return UserAuthResponseDTO::fromAuthSuccess('Falha no login', null, null);
+        }
+
+        // $token = $user->createToken('auth_token')->plainTextToken;
     }
 
     public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
@@ -51,16 +61,21 @@ class UserService {
         return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token);
     }
 
-   public function logout(int $userId): array
+   public function logout(Request $request): array
    {
-       $user = $this->userRepository->findById($userId);
+    //    $user = $this->userRepository->findById($userId);
 
-       if (!$user) {
-           throw new BadRequestException('Usuário não encontrado');
-       }
+    //    if (!$user) {
+    //        throw new BadRequestException('Usuário não encontrado');
+    //    }
 
        try {
-           $user->tokens()->delete();
+        //    $user->tokens()->delete();
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
            return ['message' => 'Logout realizado com sucesso'];
        } catch (\Exception $e) {
            throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
@@ -144,7 +159,10 @@ class UserService {
 //         $this->userRepository->updatePassword($user->id, $dto->getPassword());
 //     }
 
-        public function getUserDetails(int $userId) { 
+        // public function getUserDetails(int $userId) { 
+        public function getUserDetails() { 
+            $userId = Auth::user()->id;
+            Log::info(Auth::user());
             $user = UserDTO::fromUser($this->userRepository->findUserById($userId));
             $internship = $this->internshipRepository->getInternshipByUserId($userId);
             $skills = $this->skillRepository->getSkillByUserId($userId);

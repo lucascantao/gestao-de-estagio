@@ -16,6 +16,7 @@ use App\Http\Requests\VerifyTokenRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserController
@@ -27,7 +28,7 @@ class UserController
     public function login(LoginRequest $request): JsonResponse
     {
         try {
-            $dto = new UserLoginRequestDTO($request->email, $request->password);
+            $dto = new UserLoginRequestDTO($request->email, $request->password, $request->session());
             $result = $this->userService->login($dto);
             return response()->json($result->toArray());
         } catch (BadRequestException $e) {
@@ -47,7 +48,7 @@ class UserController
    public function logout(Request $request): JsonResponse
    {
        try {
-           $this->userService->logout($request->userId);
+           $this->userService->logout($request);
            return response()->json(['message' => 'Logout realizado com sucesso'], 200);
        } catch (BadRequestException $e) {
            return response()->json(['message' => $e->getMessage()], 404);
@@ -102,9 +103,11 @@ class UserController
 //         }
 //     }
 
-        public function getUserDetails(int $userId): JsonResponse {
+        // public function getUserDetails(?int $userId): JsonResponse {
+        public function getUserDetails(): JsonResponse {
             return response()->json(
-                $this->userService->getUserDetails($userId)
+                // $this->userService->getUserDetails($userId)
+                $this->userService->getUserDetails()
             );
         }
 }

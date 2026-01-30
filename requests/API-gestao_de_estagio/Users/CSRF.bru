@@ -1,0 +1,23 @@
+meta {
+  name: CSRF
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8000/api/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "eleonore@gmail.com",
+    "password": "12345678"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
