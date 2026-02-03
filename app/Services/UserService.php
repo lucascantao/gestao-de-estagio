@@ -35,10 +35,11 @@ class UserService {
     public function login(UserLoginRequestDTO $dto): UserAuthResponseDTO {
         $user = $this->userRepository->findByEmail($dto->getEmail());
 
-        if (!$user || !Hash::check($dto->getPassword(), $user->password)) {
-            throw new BadRequestException('Credenciais inválidas');
-        }
-
+        // if (!$user || !Hash::check($dto->getPassword(), $user->password)) {
+        //     throw new BadRequestException('Credenciais inválidas');
+        // }
+        $dto->getSession()->invalidate();
+        $dto->getSession()->regenerateToken();
         if(Auth::attempt(['email' => $dto->getEmail(), 'password' => $dto->getPassword()])) {
             $dto->getSession()->regenerate();
             return UserAuthResponseDTO::fromAuthSuccess('Login realizado com sucesso', $user, null);
@@ -63,19 +64,9 @@ class UserService {
 
    public function logout(Request $request): array
    {
-    //    $user = $this->userRepository->findById($userId);
-
-    //    if (!$user) {
-    //        throw new BadRequestException('Usuário não encontrado');
-    //    }
-
        try {
-        //    $user->tokens()->delete();
-            Auth::logout();
-
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-
            return ['message' => 'Logout realizado com sucesso'];
        } catch (\Exception $e) {
            throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());

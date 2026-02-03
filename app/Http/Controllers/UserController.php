@@ -51,7 +51,7 @@ class UserController
            $this->userService->logout($request);
            return response()->json(['message' => 'Logout realizado com sucesso'], 200);
        } catch (BadRequestException $e) {
-           return response()->json(['message' => $e->getMessage()], 404);
+           return response()->json(['message' => $e->getMessage()], 500);
        }
    }
 

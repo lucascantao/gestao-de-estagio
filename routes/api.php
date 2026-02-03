@@ -23,27 +23,28 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/verify-token', 'verifyToken');
     Route::post('/reset-password', 'resetPassword');
-    Route::prefix('user')->middleware('auth:sanctum')->group(function () {
-        // Route::get('/{id}', 'getUserDetails');
-        Route::get('/', 'getUserDetails');
+});
+
+Route::controller(UserController::class)->middleware('auth:sanctum')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::get('/me', 'getUserDetails');
     });
     Route::post('/logout', 'logout');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(InternshipController::class)->group(function () {
-        Route::prefix('internship')->group(function () {
-            Route::post('/list', 'getAllInternships'); // Listar Estágios
-            Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID / Acompanhar Estágio
-            Route::post('/', 'storeInternship'); // Cadastrar Estágio
-            Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
-            Route::post('/update-status', 'updateInternshipStatus'); // Atualizar Status do Estágio
-            Route::post('/submit-docs', 'submitInternshipDocs');// Submeter Documentação
-        });
-    }); 
-});
 
-Route::controller(VacanceController::class)->group(function () {
+Route::controller(InternshipController::class)->middleware('auth:sanctum')->group(function () {
+    Route::prefix('internship')->group(function () {
+        Route::post('/list', 'getAllInternships'); // Listar Estágios
+        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID / Acompanhar Estágio
+        Route::post('/', 'storeInternship'); // Cadastrar Estágio
+        Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
+        Route::post('/update-status', 'updateInternshipStatus'); // Atualizar Status do Estágio
+        Route::post('/submit-docs', 'submitInternshipDocs');// Submeter Documentação
+    });
+}); 
+
+Route::controller(VacanceController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('vacance')->group(function () {
         Route::post('/list', 'getAllVacancies');
         Route::get('/{id}', 'getVacanceById');
@@ -53,7 +54,7 @@ Route::controller(VacanceController::class)->group(function () {
     });
 });
 
-Route::controller(SkillController::class)->group(function () {
+Route::controller(SkillController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('skill')->group(function () {
         Route::get('/', 'getSkills');
         Route::post('/list', 'getAllSkills');
@@ -61,13 +62,13 @@ Route::controller(SkillController::class)->group(function () {
     });
 });
 
-Route::controller(CompanyController::class)->group(function () {
+Route::controller(CompanyController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('company')->group(function () {
         Route::get('/', 'getCompanies');
     });
 });
 
-Route::controller(CourseController::class)->group(function () {
+Route::controller(CourseController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('course')->group(function () {
         Route::get('/', 'getCourses');
         Route::put('user/{userId}', 'updateUserCourse');
