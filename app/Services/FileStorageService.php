@@ -26,4 +26,9 @@ class FileStorageService {
         $path = Storage::disk(self::STORAGE_NAME)->path($subfolder.$filename);
         File::delete($path);
     }
+
+	public function downloadFile($filename, $subfolder) {
+		$path = Storage::disk(self::STORAGE_NAME)->path($subfolder.'/'.$filename);
+		return response()->download($path);
+	}
 }

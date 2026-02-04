@@ -11,6 +11,7 @@ use App\Repositories\Interface\DocumentRepository;
 use App\Repositories\Interface\InternshipRepository;
 use App\utils\traits\ExceptionTrait;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -132,5 +133,15 @@ class InternshipService {
         }
 
         return $response;
+    }
+
+    public function downloadInternshipDocument(int $internshipId) {
+        $user = Auth::user();
+        $internshipDoc = $this->documentRepository->getDocumentByInternshipId($internshipId);
+        if(!$internshipDoc || $user->id !== 1) {
+            return null;
+        }
+        $subfolder = "internships/{$internshipId}/documents/";
+        return $this->fileStorageService->downloadFile($internshipDoc->filename, $subfolder);
     }
 }

@@ -81,4 +81,8 @@ class InternshipController
             )
         );
     }
+
+    public function downloadInternshipDocument(int $id) {
+        return $this->internshipService->downloadInternshipDocument($id);
+    }
 }

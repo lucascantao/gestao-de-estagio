@@ -41,6 +41,7 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
             'roles.name as role_name',
             'courses.id as course_id',
             'courses.name as course_name',
+            DB::raw('CASE WHEN documents.id IS NOT NULL THEN true ELSE false END AS has_document')
         )
         ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
         ->join('users', 'internships.user_id', '=', 'users.id')
@@ -48,6 +49,7 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         ->join('companies', 'internships.company_id', '=', 'companies.id')
         ->join('roles', 'users.role_id', '=', 'roles.id')
         ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
+        ->leftJoin('documents', 'internships.id', '=', 'documents.internship_id')
         ->where('internships.id', '=', $id);
 
         return $query->first();
@@ -101,6 +103,7 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
             'roles.name as role_name',
             'courses.id as course_id',
             'courses.name as course_name',
+            DB::raw('CASE WHEN documents.id IS NOT NULL THEN true ELSE false END AS has_document')
         )
         ->join('internship_status', 'internships.internship_status_id', '=', 'internship_status.id')
         ->join('users', 'internships.user_id', '=', 'users.id')
@@ -108,6 +111,7 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         ->join('companies', 'internships.company_id', '=', 'companies.id')
         ->join('roles', 'users.role_id', '=', 'roles.id')
         ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
+        ->leftJoin('documents', 'internships.id', '=', 'documents.internship_id')
         ->orderBy('internships.id', 'desc');
 
         return $query->paginate($perPage, ['*'], 'page', $page);

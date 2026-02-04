@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->booted(function () {
         RateLimiter::for('api', function (Request $request) {
             // Limite de 500 requisições por minuto por usuário ou IP
-            return Limit::perMinute(500)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
     })
     ->create();

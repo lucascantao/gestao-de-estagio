@@ -1,0 +1,42 @@
+meta {
+  name: Baixar Documento
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/internship/submit-docs
+  body: multipartForm
+  auth: inherit
+}
+
+body:json {
+  {
+    "workload": "30",
+    "schedule": "Noite",
+    "startDate": "2024-01-02",
+    "endDate": "2024-01-01",
+    "companyId": null,
+    "salary": 724.00,
+    "userId": 3,
+    "observation": "",
+    "supervisor": "Elonore",
+    "company": {
+      "name": "Empresa XYZ",
+      "address": "Rua ABC",
+      "cnpj": "A12B.SALÇD/ALDJDKLAS-10AD8",
+      "email": "email@gmail.com",
+      "phone": "(99) 99187-8008"
+    }
+  }
+}
+
+body:multipart-form {
+  internshipId: 3
+  file: @file(C:\Users\mauro\Downloads\kaelen_character_sheet.pdf)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

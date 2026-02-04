@@ -36,11 +36,12 @@ Route::controller(UserController::class)->middleware('auth:sanctum')->group(func
 Route::controller(InternshipController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('internship')->group(function () {
         Route::post('/list', 'getAllInternships'); // Listar Estágios
-        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID / Acompanhar Estágio
-        Route::post('/', 'storeInternship'); // Cadastrar Estágio
-        Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
         Route::post('/update-status', 'updateInternshipStatus'); // Atualizar Status do Estágio
         Route::post('/submit-docs', 'submitInternshipDocs');// Submeter Documentação
+        Route::get('/download-docs/{id}', 'downloadInternshipDocument');// Baixar Documentação
+        Route::post('/', 'storeInternship'); // Cadastrar Estágio
+        Route::get('/{id}', 'getInternshipById'); // Buscar Estágio por ID / Acompanhar Estágio
+        Route::put('/{id}', 'updateInternship'); // Atualizar Estágio
     });
 }); 
 

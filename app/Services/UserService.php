@@ -34,10 +34,6 @@ class UserService {
 
     public function login(UserLoginRequestDTO $dto): UserAuthResponseDTO {
         $user = $this->userRepository->findByEmail($dto->getEmail());
-
-        // if (!$user || !Hash::check($dto->getPassword(), $user->password)) {
-        //     throw new BadRequestException('Credenciais inválidas');
-        // }
         $dto->getSession()->invalidate();
         $dto->getSession()->regenerateToken();
         if(Auth::attempt(['email' => $dto->getEmail(), 'password' => $dto->getPassword()])) {
@@ -46,15 +42,10 @@ class UserService {
         } else {
             return UserAuthResponseDTO::fromAuthSuccess('Falha no login', null, null);
         }
-
-        // $token = $user->createToken('auth_token')->plainTextToken;
     }
 
     public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
-        // se for cadastro de Supervisor, anular o id e deixar em espera
-        // if ($dto->getRoleId() == 1) {
-        //     $dto->setRoleId(null);
-        // }
+
         $dto->setRoleId(2); // aluno padrão por enquanto
         $user = $this->userRepository->store($dto->toInsertArray());
         $userModel = $this->userRepository->findUserById($user->getAttribute('id'));
