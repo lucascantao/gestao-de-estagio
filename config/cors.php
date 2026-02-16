@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:4200','http://localhost:4300'],
+    'allowed_origins' => [
+        'http://localhost:4200',
+        'http://localhost:4300',
+        'https://estagio.m41d.com'
+        ],
 
     'allowed_origins_patterns' => [],
 
