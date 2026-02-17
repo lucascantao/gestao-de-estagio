@@ -9,6 +9,7 @@ use App\Repositories\Interface\CompanyRepository;
 use App\Repositories\Interface\CourseRepository;
 use App\utils\traits\ExceptionTrait;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CourseService {
 
@@ -39,25 +40,21 @@ class CourseService {
         $response = [];
         $response['metadata'] = null;
         $response['exception'] = null;
-        // dd('teste');
         try {
-
-            // dd($course);
             $courseObj = [
                 'course_id' => $course['courseId'],
                 'user_id' => $userId,
                 'student_number' => $course['studentNumber']
             ];
-
-            // dd($courseObj);
-            
             $this->courseRepository->assignCourseToUser($courseObj, $userId);
             $response['status'] = 'success';
+            $response['code'] = 200;
             $response['data'] = ['message' => 'Curso atualizado com sucesso.'];
             return $response;
         } catch (Exception $e) {
+            Log::info('Erro ao cadastrar curso: ' . $e->getMessage());
             $response['status'] = 'error';
-            $response['data'] = null;
+            $response['code'] = 500;
             $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
             return $response;
         }

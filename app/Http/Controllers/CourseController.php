@@ -46,7 +46,15 @@ class CourseController
     public function updateUserCourse(Request $request, $userId) {
         $courseObject = $request->all();
         // dd('teste');
-        $this->courseService->assignCourseToUser($courseObject, $userId);
-        return response()->json(['message' => 'Curso atualizado com sucesso'], 200);
+        
+        $response = $this->courseService->assignCourseToUser($courseObject, $userId);
+
+        // return match ($response['status']) {
+        //     'success' => response()->json($response['data'], 200),
+        //     'error' => response()->json(['message' => 'Erro ao atualizar curso.'], 500),
+        //     default => response()->json(['message' => 'Status desconhecido.'], 500)
+        // };
+
+        return response()->json($response, $response['code']);
     }
 }

@@ -28,16 +28,19 @@ class CourseRepositoryImpl extends BaseRepositoryImpl implements CourseRepositor
         return $query->get();
     }
 
-    public function assignCourseToUser(array $course, int $userId) {
+    public function assignCourseToUser(array $course, int $userId): bool {
+        $userExists = DB::table('user_enrollments')->where('student_number', $course['student_number'])->first();
+
+        if($userExists) {
+            throw new \Exception('O número de matrícula já está associado a outro usuário.');
+        }
+
         $userCourse = DB::table('user_enrollments')->where('user_id', $userId);
-        // dd($userCourse->first());
         if($userCourse->first()) {
             DB::table('user_enrollments')->where('user_id', $userId)->update($course);
         } else {
             DB::table('user_enrollments')->insert($course);
         }
-        // DB::table('user_enrollments')->where('user_id', $userId)->updateOrInsert($course);
-
-        // DB::table('user_skills')->insert($data);
+        return true;
     }
 }
