@@ -41,13 +41,12 @@ class InternshipController
     }
 
     public function storeInternship(CreateInternshipRequest $request) {
-        return response()
-        ->json(APIResponseDTO::fromData(
+        $response = APIResponseDTO::fromData(
             $this->internshipService->storeInternship(
                     StoreInternshipRequestDTO::fromRequest($request->array())
                 )
-            )
-        );
+            );
+        return response()->json($response, $response->code() ?? 500);
     }
 
     public function updateInternship(UpdateInternshipRequest $request, int $id) {

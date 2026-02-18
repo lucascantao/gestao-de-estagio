@@ -58,8 +58,11 @@ class InternshipService {
                 $this->intershipRepository->store($insertData);
                 $response['data'] = ['message' => 'Estágio cadastrado com sucesso.'];
                 $response['status'] = 'success';
+                $response['code'] = 200;
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Log::info('Transação finalizada com erro: ' . $e->getMessage());
+            $response['code'] = 500;
             $response['status'] = 'error';
             $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
         }
@@ -74,7 +77,7 @@ class InternshipService {
             $this->intershipRepository->update($id, $updateData);
             $response['data'] = ['message' => 'Estágio atualizado com sucesso.'];
             $response['status'] = 'success';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response['status'] = 'error';
             $response['exception'] = $this->exception($e, __FILE__, __METHOD__);
         }
