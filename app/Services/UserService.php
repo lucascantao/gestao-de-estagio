@@ -14,6 +14,7 @@ use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\utils\traits\ExceptionTrait;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -44,13 +45,15 @@ class UserService {
         }
     }
 
-    public function register(UserRegisterRequestDTO $dto): UserAuthResponseDTO {
+    public function register(UserRegisterRequestDTO $dto, Session $session): UserAuthResponseDTO {
 
         $dto->setRoleId(2); // aluno padrão por enquanto
         $user = $this->userRepository->store($dto->toInsertArray());
         $userModel = $this->userRepository->findUserById($user->getAttribute('id'));
-        $token = $user->createToken($user->getAttribute('name') . '_auth_token')->plainTextToken;
-        return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token);
+        $session->invalidate();
+        $session->regenerateToken();
+        // $token = $user->createToken($user->getAttribute('name') . '_auth_token')->plainTextToken;/
+        return UserAuthResponseDTO::fromAuthSuccess('Usuário registrado com sucesso', $userModel, $token ?? null);
     }
 
    public function logout(Request $request): array

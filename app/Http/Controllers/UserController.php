@@ -39,7 +39,8 @@ class UserController
     public function register(RegisterRequest $request): JsonResponse {
         return response()->json(
             $this->userService->register(
-                UserRegisterRequestDTO::fromArray($request->toArray())
+                UserRegisterRequestDTO::fromArray($request->toArray()),
+                $request->session()
             ),
             201
         );
