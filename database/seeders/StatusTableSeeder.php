@@ -27,7 +27,7 @@ class StatusTableSeeder extends Seeder
             ],
             [
                 'name' => 'Avaliando Documentação',
-                'description' => 'Estágio em processo de avaliação da documentação.',
+                'description' => 'Aguardando avaliação da documentação por um coordenador.',
                 'text_color' => '#000000',
                 'background_color' => '#fff4b4'
             ],
