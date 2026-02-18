@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('internship_status', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
+            $table->string('description', 255)->nullable();
+            $table->string('text_color', 10)->nullable();
+            $table->string('background_color', 10)->nullable();
             $table->timestamps();
         });
     }

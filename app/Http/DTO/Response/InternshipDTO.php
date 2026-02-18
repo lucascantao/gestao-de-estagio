@@ -26,7 +26,10 @@ class InternshipDTO implements JsonSerializable {
     public static function fromIntership(InternshipModel $internship): self {
         $status = new InternshipStatusDTO(
             $internship->internship_status_id,
-            $internship->internship_status_name
+            $internship->internship_status_name,
+            $internship->internship_status_description,
+            $internship->internship_status_text_color,
+            $internship->internship_status_background_color
         );
         $role = new RoleDTO(
             $internship->role_id,
@@ -75,7 +78,10 @@ class InternshipDTO implements JsonSerializable {
     public static function fromUser(InternshipModel $internship): self {
         $status = new InternshipStatusDTO(
             $internship->internship_status_id,
-            $internship->internship_status_name
+            $internship->internship_status_name,
+            $internship->internship_status_description,
+            $internship->internship_status_color,
+            $internship->internship_status_background_color
         );
         $course = new CourseDTO(
             $internship->course_id,

@@ -21,7 +21,7 @@ class InternshipsTableSeeder extends Seeder
                 'salary'=> 1500.00,
                 'observation'=> 'First internship',
                 'supervisor'=> 'Alice Smith',
-                'internship_status_id' => 1,
+                'internship_status_id' => 2,
                 'company_id' => 1,
                 'user_id' => 2,
             ],

@@ -11,6 +11,7 @@ use App\Http\Requests\InternshipRequest;
 use App\Http\Requests\UpdateInternshipRequest;
 use App\Services\InternshipService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InternshipController
 {
@@ -60,10 +61,11 @@ class InternshipController
     }
 
     public function updateInternshipStatus(Request $request) {
+        Log::info('Update Internship Status Request: ', $request->all());
         return response()
         ->json(APIResponseDTO::fromData(
             $this->internshipService->updateInternshipStatus(
-                    $request->input('internshipId'),
+                    $request->input('id'),
                     $request->input('statusId'),
                 )
             )

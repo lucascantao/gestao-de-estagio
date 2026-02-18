@@ -50,7 +50,7 @@ class InternshipService {
         try {
             DB::transaction(function () use ($internship, &$response) {
                 $insertData = $internship->toInsertArray();
-                $insertData['internship_status_id'] = 1;
+                $insertData['internship_status_id'] = 2; // Status "Em Andamento"
                 if($internship->getCompany() !== null) {
                     $newCompany = $this->companyRepository->store($internship->getCompany()->toArray());
                     $insertData['company_id'] = $newCompany->id;
