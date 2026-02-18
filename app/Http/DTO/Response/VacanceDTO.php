@@ -8,6 +8,7 @@ use JsonSerializable;
 class VacanceDTO implements JsonSerializable {
 
     public function __construct(
+        protected ?int $id,
         protected ?string $title,
         protected ?string $description,
         protected ?int $numberOfPositions,
@@ -20,6 +21,7 @@ class VacanceDTO implements JsonSerializable {
 
     public static function fromIntership(VacanceModel $vacance): self {
         return new self(
+            $vacance->id,
             $vacance->title,
             $vacance->description,
             $vacance->number_of_positions,
@@ -33,6 +35,7 @@ class VacanceDTO implements JsonSerializable {
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'number_of_positions' => $this->numberOfPositions,
@@ -43,6 +46,9 @@ class VacanceDTO implements JsonSerializable {
         ];
     }
 
+    public function getId(): ?int {
+        return $this->id;
+    }
     public function getTitle(): ?string {
         return $this->title;
     }
