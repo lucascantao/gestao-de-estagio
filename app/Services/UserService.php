@@ -47,6 +47,8 @@ class UserService {
 
     public function register(UserRegisterRequestDTO $dto, Session $session): UserAuthResponseDTO {
 
+        Log::info('Registrando usuário', ['email' => $dto->getEmail()]);
+
         $dto->setRoleId(2); // aluno padrão por enquanto
         $user = $this->userRepository->store($dto->toInsertArray());
         $userModel = $this->userRepository->findUserById($user->getAttribute('id'));

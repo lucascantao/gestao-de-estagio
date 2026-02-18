@@ -17,6 +17,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserController
@@ -37,6 +38,7 @@ class UserController
     }
 
     public function register(RegisterRequest $request): JsonResponse {
+        Log::info('Recebendo requisição de registro', ['email' => $request->email, 'session' => $request->session()]);
         return response()->json(
             $this->userService->register(
                 UserRegisterRequestDTO::fromArray($request->toArray()),
