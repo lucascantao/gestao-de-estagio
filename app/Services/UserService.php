@@ -149,7 +149,6 @@ class UserService {
         // public function getUserDetails(int $userId) { 
         public function getUserDetails() { 
             $userId = Auth::user()->id;
-            Log::info(Auth::user());
             $user = UserDTO::fromUser($this->userRepository->findUserById($userId));
             $internship = $this->internshipRepository->getInternshipByUserId($userId);
             $skills = $this->skillRepository->getSkillByUserId($userId);

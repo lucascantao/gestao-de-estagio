@@ -29,7 +29,10 @@ class CourseRepositoryImpl extends BaseRepositoryImpl implements CourseRepositor
     }
 
     public function assignCourseToUser(array $course, int $userId): bool {
-        $userExists = DB::table('user_enrollments')->where('student_number', $course['student_number'])->first();
+        $userExists = DB::table('user_enrollments')
+            ->where('student_number', $course['student_number'])
+            ->where('user_id', '!=', $userId)
+            ->first();
 
         if($userExists) {
             throw new \Exception('O número de matrícula já está associado a outro usuário.');
