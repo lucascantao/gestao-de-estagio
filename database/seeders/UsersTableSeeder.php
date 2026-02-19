@@ -24,16 +24,6 @@ class UsersTableSeeder extends Seeder
                 'role_id' => 1,
             ],
             [
-                'name' => 'Admin Dev',
-                'email'=> 'admindev@gmail.com',
-                'phone'=> '(91) 996345678',
-                'address'=> 'Pass Tupy, 11',
-                'birthdate'=> '2000-10-22',
-                'gender'=> 'Masculino',
-                'password'=> bcrypt('admindev'),
-                'role_id' => 1,
-            ],
-            [
                 'name' => 'John Doe',
                 'email'=> 'johndoe@gmail.com',
                 'phone'=> '1234567890',
@@ -72,6 +62,16 @@ class UsersTableSeeder extends Seeder
                 'gender'=> 'feminino',
                 'password'=> bcrypt('12345678'),
                 'role_id' => 2,
+            ],
+            [
+                'name' => 'Admin Dev',
+                'email'=> 'admindev@gmail.com',
+                'phone'=> '(91) 996345678',
+                'address'=> 'Pass Tupy, 11',
+                'birthdate'=> '2000-10-22',
+                'gender'=> 'Masculino',
+                'password'=> bcrypt('admindev'),
+                'role_id' => 1,
             ],
         ]);
     }
