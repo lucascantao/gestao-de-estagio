@@ -141,7 +141,7 @@ class InternshipService {
     public function downloadInternshipDocument(int $internshipId) {
         $user = Auth::user();
         $internshipDoc = $this->documentRepository->getDocumentByInternshipId($internshipId);
-        if(!$internshipDoc || $user->id !== 1) {
+        if(!$internshipDoc || $user->role_id !== 1) {
             return null;
         }
         $subfolder = "internships/{$internshipId}/documents/";
