@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\DTO\Request\InternshipRequestFilterDTO;
 use App\Http\DTO\Request\StoreInternshipRequestDTO;
 use App\Http\DTO\Request\UpdateInternshipRequestDTO;
 use App\Http\DTO\Response\InternshipDTO;
@@ -35,8 +36,8 @@ class InternshipService {
         return $response;
     }
 
-    public function getAllInternships(int $page, int $perpage): PageResponseDTO {
-        $paginator = $this->intershipRepository->getAllInternships($page, $perpage);
+    public function getAllInternships(int $page, int $perpage, InternshipRequestFilterDTO $filters): PageResponseDTO {
+        $paginator = $this->intershipRepository->getAllInternships($page, $perpage, $filters);
         $internship = $paginator
             ->values()
             ->map(fn($internship) => InternshipDTO::fromIntership($internship))

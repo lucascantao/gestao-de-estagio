@@ -2,11 +2,12 @@
 
 namespace App\Repositories\Interface;
 
+use App\Http\DTO\Request\InternshipRequestFilterDTO;
 use App\Repositories\Interface\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface InternshipRepository extends BaseRepository {
-    public function getAllInternships(int $page, int $perPage): LengthAwarePaginator;
+    public function getAllInternships(int $page, int $perPage, InternshipRequestFilterDTO $filter): LengthAwarePaginator;
 
     public function getInternshipById(int $id);
     

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\DTO\Request\InternshipRequestFilterDTO;
 use App\Http\DTO\Request\StoreInternshipRequestDTO;
 use App\Http\DTO\Request\UpdateInternshipRequestDTO;
 use App\Http\DTO\Response\APIResponseDTO;
@@ -26,9 +27,11 @@ class InternshipController
     }
 
     public function getAllInternships(InternshipRequest $request) {
+        // dd($request->attributes('filters'));
         $res = $this->internshipService->getAllInternships(
             $request->query('page'),
-            $request->query('perPage')
+            $request->query('perPage'),
+            InternshipRequestFilterDTO::fromArray($request->attributes('filters')),
         );
 
         return response()->json(APIResponseDTO::fromData(

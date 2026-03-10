@@ -29,8 +29,8 @@ class InternshipRequest extends FormRequest
 
             'userId' => 'nullable|integer|min:1',
             'search' => 'nullable|string|max:255',
-            // 'status' => 'nullable|integer|exists:communities_kit_status,id',
             'filters' => 'nullable|array',
+            'filters.search' => 'nullable|string|max:255',
         ];
     }
 

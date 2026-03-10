@@ -2,14 +2,18 @@
 
 namespace App\Repositories\Impl;
 
+use App\Http\DTO\Request\InternshipRequestFilterDTO;
 use App\Models\InternshipModel;
 use App\Repositories\Interface\InternshipRepository;
+use App\utils\traits\InternshipFilter;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 // use App\Models\Estagio;
 
 class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipRepository{
+
+    use InternshipFilter;
 
     public function __construct(InternshipModel $model) {
         parent::__construct($model);
@@ -87,7 +91,7 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         return $query->first();
     }
 
-    public function getAllInternships(int $page, int $perPage): LengthAwarePaginator {
+    public function getAllInternships(int $page, int $perPage, InternshipRequestFilterDTO $filter): LengthAwarePaginator {
         $query = $this->model::select(
             'internships.id',
             'internships.workload',
@@ -122,6 +126,8 @@ class InternshipRepositoryImpl extends BaseRepositoryImpl implements InternshipR
         ->join('courses', 'user_enrollments.course_id', '=', 'courses.id')
         ->leftJoin('documents', 'internships.id', '=', 'documents.internship_id')
         ->orderBy('internships.id', 'desc');
+
+        $query = $this->filter($query, $filter);
 
         return $query->paginate($perPage, ['*'], 'page', $page);
     }
