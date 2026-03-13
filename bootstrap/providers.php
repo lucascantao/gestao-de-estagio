@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    App\Providers\FortifyServiceProvider::class,
     App\Providers\RepositoryProvider::class,
     App\Providers\ServiceProvider::class,
 ];

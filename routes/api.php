@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacanceController;
 use Illuminate\Http\Request;
@@ -28,8 +29,18 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(UserController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/me', 'getUserDetails');
+        Route::post('/two-factor-challenge', 'twoFactorChallenge');
     });
     Route::post('/logout', 'logout');
+});
+
+Route::controller(TwoFactorController::class)->middleware('auth:sanctum')->group(function () {
+    Route::prefix('two-factor')->group(function () {
+        Route::post('/activate', 'activate');
+        Route::post('/confirm', 'confirm');
+        Route::post('/recovery', 'recoveryCode');
+        Route::delete('/delete', 'delete');
+    });
 });
 
 
