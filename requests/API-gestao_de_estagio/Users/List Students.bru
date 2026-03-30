@@ -1,0 +1,30 @@
+meta {
+  name: List Students
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{HTTP}}{{DOMAIN}}/{{API_PATH}}/user/students?page=1&perPage=15
+  body: json
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  perPage: 15
+}
+
+body:json {
+  {
+    "filters": {
+  //     "skills": [1,4],
+  //     "courses": [1]
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

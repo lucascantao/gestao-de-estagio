@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interface;
 
+use App\Http\DTO\Request\User\StudentFilterDTO;
 use App\Models\UserModel;
 use App\Repositories\Interface\BaseRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -9,6 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface UserRepository extends BaseRepository {
     public function findUserById(int $id): ?UserModel;
     public function findByEmail(string $email): ?UserModel;
+    public function getAllStudents(int $page, int $perPage, StudentFilterDTO $filters): LengthAwarePaginator;
     // public function createUser(array $data): UserModel;
     // public function updateUser(UserModel $user, array $data): ?UserModel;
     // public function updatePassword(int $id, string $password): ?UserModel;

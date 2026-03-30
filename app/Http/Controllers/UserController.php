@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\DTO\Request\User\ResetPasswordRequestDTO;
+use App\Http\DTO\Request\User\StudentFilterDTO;
 use App\Http\DTO\Request\User\UpdatePasswordRequestDTO;
 use App\Http\DTO\Request\User\UserLoginRequestDTO;
 use App\Http\DTO\Request\User\UserRegisterRequestDTO;
 use App\Http\DTO\Request\User\VerifyTokenRequestDTO;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\PageableRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\StudentRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\VerifyTokenRequest;
 use App\Services\UserService;
@@ -57,6 +60,16 @@ class UserController
            return response()->json(['message' => $e->getMessage()], 500);
        }
    }
+
+    public function getStudentList(PageableRequest $request): JsonResponse 
+    {
+        return response()->json($this->userService->getAllStudents(
+                $request->query('page'),
+                $request->query('perPage'),
+                StudentFilterDTO::fromRequest($request)
+            )
+        );
+    }
 
 //     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
 //     {

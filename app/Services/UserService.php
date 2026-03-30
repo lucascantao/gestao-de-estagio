@@ -3,18 +3,23 @@
 namespace App\Services;
 
 use App\Http\DTO\Request\User\ResetPasswordRequestDTO;
+use App\Http\DTO\Request\User\StudentFilterDTO;
 use App\Http\DTO\Request\User\UpdatePasswordRequestDTO;
 use App\Http\DTO\Response\InternshipDTO;
 use App\Http\DTO\Response\User\UserDTO;
 use App\Http\DTO\Request\User\UserLoginRequestDTO;
 use App\Http\DTO\Request\User\UserRegisterRequestDTO;
 use App\Http\DTO\Request\User\VerifyTokenRequestDTO;
+use App\Http\DTO\Response\APIResponseDTO;
+use App\Http\DTO\Response\PageResponseDTO;
 use App\Http\DTO\Response\User\UserAuthResponseDTO;
 use App\Repositories\Interface\InternshipRepository;
 use App\Repositories\Interface\SkillRepository;
 use App\Repositories\Interface\UserRepository;
 use App\utils\traits\ExceptionTrait;
+use Exception;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -68,6 +73,39 @@ class UserService {
            throw new BadRequestException('Erro ao deslogar usuário: ' . $e->getMessage());
        }
    }
+
+    public function getAllStudents(int $page, int $perPage, StudentFilterDTO $filters): JsonResponse 
+    {
+        try {
+            $paginator = $this->userRepository->getAllStudents($page, $perPage, $filters);
+    
+            $students = $paginator
+                ->values()
+                ->map(fn($users) => UserDTO::fromStudent($users))
+                ->toArray();
+    
+            $pageResponse = PageResponseDTO::fromPaginator($paginator, $students);
+    
+            return response()->json(APIResponseDTO::fromData(
+                [
+                    'status' => 'success',
+                    'data' => $pageResponse->toArray(),
+                    'metadata' => null,
+                    'exception' => null
+                ]
+            ));
+        } catch (Exception $e) {
+            return response()->json(APIResponseDTO::fromData(
+                [
+                    'status' => 'error',
+                    'data' => null,
+                    'metadata' => null,
+                    'exception' => $this->exception($e, __FILE__, __METHOD__)
+                ]
+            ), 500);
+        }
+        
+    }
 
 //     public function forgotPassword(string $email): void
 //     {

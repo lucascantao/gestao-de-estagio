@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Impl;
 
+use App\Http\DTO\Request\User\StudentFilterDTO;
 use App\Http\Exceptions\DatabaseException;
 use App\Http\Exceptions\NotFoundException;
 use App\Models\UserModel;
 use App\Repositories\Interface\UserRepository;
+use App\utils\traits\StudentFilter;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\Log;
 // use App\Models\Estagio;
 
 class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
+
+    Use StudentFilter; 
 
     public function __construct(UserModel $model) {
         parent::__construct($model);
@@ -89,6 +93,27 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
         ->join('courses', 'user_enrollments.course_id', '=', 'courses.id');
 
         return $query->first();
+    }
+
+    public function getAllStudents(int $page, int $perPage, StudentFilterDTO $filters): LengthAwarePaginator
+    {
+        $query = $this->model::query()->select([
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.phone',
+            'users.gender',
+            'users.birthdate',
+            'user_enrollments.student_number',
+            'courses.id as course_id',
+            'courses.name as course_name'
+        ])
+        ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
+        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id');
+
+        $query = $this->filter($query, $filters);
+
+        return $query->paginate($perPage, ['*'], 'page', $page);
     }
 
 

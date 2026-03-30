@@ -27,6 +27,7 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(UserController::class)->middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function () {
+        Route::post('/students', 'getStudentList');
         Route::get('/me', 'getUserDetails');
     });
     Route::post('/logout', 'logout');

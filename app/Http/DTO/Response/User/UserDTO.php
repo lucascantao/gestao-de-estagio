@@ -55,6 +55,23 @@ class UserDTO implements JsonSerializable {
         );
     }
 
+    public static function fromStudent(UserModel $user): self {
+        return new self(
+            $user->getAttribute('id'),
+            $user->getAttribute('name'),
+            $user->getAttribute('email'),
+            $user->getAttribute('phone'),
+            null,
+            $user->getAttribute('birthdate'),
+            $user->getAttribute('gender'),
+            $user->getAttribute('student_number'),
+            null,
+            null,
+            $user->getAttribute('course_id'),
+            $user->getAttribute('course_name'),
+        );
+    }
+
     public static function fromUserStdClass(stdClass $user): self {
         return new self(
             $user->id ?? null,
