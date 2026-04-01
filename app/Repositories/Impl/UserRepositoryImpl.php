@@ -109,7 +109,7 @@ class UserRepositoryImpl extends BaseRepositoryImpl implements UserRepository{
             'courses.name as course_name'
         ])
         ->join('user_enrollments', 'users.id', '=', 'user_enrollments.user_id')
-        ->join('courses', 'user_enrollments.course_id', '=', 'courses.id');
+        ->leftJoin('courses', 'user_enrollments.course_id', '=', 'courses.id');
 
         $query = $this->filter($query, $filters);
 
