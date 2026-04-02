@@ -74,7 +74,7 @@ class UserService {
        }
    }
 
-    public function getAllStudents(int $page, int $perPage, StudentFilterDTO $filters): JsonResponse 
+    public function getAllStudents(int $page, int $perPage, StudentFilterDTO $filters): APIResponseDTO 
     {
         try {
             $paginator = $this->userRepository->getAllStudents($page, $perPage, $filters);
@@ -86,23 +86,23 @@ class UserService {
     
             $pageResponse = PageResponseDTO::fromPaginator($paginator, $students);
     
-            return response()->json(APIResponseDTO::fromData(
+            return APIResponseDTO::fromData(
                 [
                     'status' => 'success',
                     'data' => $pageResponse->toArray(),
                     'metadata' => null,
                     'exception' => null
                 ]
-            ));
+            );
         } catch (Exception $e) {
-            return response()->json(APIResponseDTO::fromData(
+            return APIResponseDTO::fromData(
                 [
                     'status' => 'error',
                     'data' => null,
                     'metadata' => null,
                     'exception' => $this->exception($e, __FILE__, __METHOD__)
                 ]
-            ), 500);
+            );
         }
         
     }

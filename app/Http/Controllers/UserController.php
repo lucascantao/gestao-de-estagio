@@ -67,8 +67,7 @@ class UserController
                 $request->query('page'),
                 $request->query('perPage'),
                 StudentFilterDTO::fromRequest($request)
-            )
-        );
+            ));
     }
 
 //     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
